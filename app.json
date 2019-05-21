@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/shop/shop",
     "pages/mine/mine",
-    "pages/market/market"
+    "pages/market/market",
+    "pages/authorize/authorize"
   ],
   "tabBar": {
     "color": "#858585",
