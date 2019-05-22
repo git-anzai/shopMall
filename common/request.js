@@ -10,9 +10,9 @@ function request(api, data, success, fail) {
   var header = {
     'Content-type': 'application/x-www-form-urlencoded'
   };
-  if (getApp().globalData.sess) {
-    header["Cookie"] = 'PHPSESSID=' + getApp().globalData.sess;
-  }
+  // if (getApp().globalData.sess) {
+  //   header["Cookie"] = 'PHPSESSID=' + getApp().globalData.sess;
+  // }
   //console.log(getApp().globalData.sess);
   wx.showNavigationBarLoading();
   wx.request({

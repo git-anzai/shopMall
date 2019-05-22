@@ -8,7 +8,6 @@ Page({
     hasUserInfo: false,
   },
   onLoad: function () {
-    var that = this;
     // 判断是否已经授权
     wx.getSetting({
       success: (res) => {
@@ -16,10 +15,24 @@ Page({
           wx.getUserInfo({
             success: (res) => {
               console.log("userinfo",res)
-              var that = this
               //调用应用实例的方法获取全局数据
                 //更新数据
               app.globalData.userInfo = res.userInfo;
+              var param = {
+                userInfo: res
+              };
+              requestApi.request("https://dev.shijijiaming.cn:8003/App/User/userUpdate", param, function (result) {
+                // if (true == result.success) {
+                //   $Message({ content: result.message });
+                //   setTimeout(function () {
+                //     wx.reLaunch({
+                //       url: '../index/index'
+                //     })
+                //   }, 1000);
+                // } else {
+                //   $Message({ content: result.message, type: 'error' });
+                // }
+              });
               wx.login({
                 success: loginRes => {
                   var param = {
