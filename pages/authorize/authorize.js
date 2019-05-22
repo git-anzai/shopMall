@@ -43,7 +43,7 @@ Page({
           var param = {
             code: res
             };
-          requestApi.request(requestApi.api.APP_USER_USERLOGIN, param, function (result) {
+          requestApi.request("https://dev.shijijiaming.cn:8003/App/User/userLogin", param, function (result) {
             // if (true == result.success) {
             //   $Message({ content: result.message });
             //   setTimeout(function () {
