@@ -1,3 +1,6 @@
+import requestApi from '../../common/request.js'
+var app = getApp()
+
 Page({
   data: {
     motto: 'Hello World',
@@ -12,10 +15,29 @@ Page({
         if (res.authSetting['scope.userInfo']) {//授权了，可以获取用户信息了
           wx.getUserInfo({
             success: (res) => {
-              console.log(res)
+              console.log("userinfo",res)
+              var that = this
+              //调用应用实例的方法获取全局数据
+                //更新数据
+              app.globalData.userInfo = res.userInfo;
               wx.login({
-                success: ress => {
-                  console.log(ress)
+                success: loginRes => {
+                  var param = {
+                    code: loginRes.code
+                  };
+                  requestApi.request("https://dev.shijijiaming.cn:8003/App/User/userLogin", param, function (result) {
+                    // if (true == result.success) {
+                    //   $Message({ content: result.message });
+                    //   setTimeout(function () {
+                    //     wx.reLaunch({
+                    //       url: '../index/index'
+                    //     })
+                    //   }, 1000);
+                    // } else {
+                    //   $Message({ content: result.message, type: 'error' });
+                    // }
+                  });
+                  //https://dev.shijijiaming.cn:8003/App/User/userLogin
                   wx.reLaunch({
                     url: '../shop/shop'
                   });
