@@ -30,7 +30,7 @@ function request(api, data, success, fail) {
       if(res.data.success==false){
         wx.showModal({
           title: '提示',
-          content: res.data.message,
+          content: 'success false',
           showCancel: false
         });
       }
@@ -46,7 +46,7 @@ function request(api, data, success, fail) {
           } else {
             wx.showModal({
               title: '提示',
-              content: result.msg,
+              content: '业务错误',
               showCancel: false
             });
           }

@@ -42,7 +42,6 @@
         <view class='mainThree-one'>
           <text>留言</text>
         </view>
-
         <view class='mainThree-two'>
           <input placeholder="选填：给商家留言(100字以内)" auto-focus></input>
         </view>

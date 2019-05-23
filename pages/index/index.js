@@ -19,7 +19,7 @@ Page({
                 //更新数据
               app.globalData.userInfo = res.userInfo;
               var param = {
-                userInfo: res
+                userInfo: res.userInfo
               };
               requestApi.request("https://dev.shijijiaming.cn:8003/App/User/userUpdate", param, function (result) {
                 // if (true == result.success) {

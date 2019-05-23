@@ -141,8 +141,9 @@
             <!-- <view class="desc">另需配送费￥{{deliveryPrice}}元</view> -->
           </view>
           <view class="content-right" catchtap="pay">
-            <view class="pay enough" :class="payClass">
-              {{payDesc}}
+            <view class="pay enough" >
+              去结算
+              <!-- :class="payClass" -->
             </view>
           </view>
         </view>
