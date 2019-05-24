@@ -1,5 +1,7 @@
 /* pages/home/home-details/pay.wxss */
-
+page{
+  background: #F4F4F4;
+}
 .pay-Bottom{
   width: 100%;
   height: 105rpx;

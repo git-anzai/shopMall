@@ -14,6 +14,10 @@ avatarUrl 头像url
 gender 用户性别  0  未知  1 男 2 女
 
 
+
+
+
+
 country 国家
 
 province  省份
@@ -27,5 +31,13 @@ language   语言  en英文  zh_CH 中文  zh_TW 繁体中文
 2、获取购物车商品 
 3、获取店铺信息  
 4、下单
+请求参数实例
+
+data:{"list":[{"id":"SK0000296","goods_num":1},{"id":"SK0000297","goods_num":1}]}
+
+
+
+
+
 5、生成订单信息
 6、调取支付接口

@@ -80,7 +80,7 @@
       </view>
     </scroll-view>
   </view>
-  <scroll-view scroll-y="true" style="height: 500px;" scroll-into-view="{{toView}}" class="foods-wrapper">
+  <scroll-view scroll-y="true" style="height: 500px;" scroll-into-view="{{toView}}" class="foods-wrapper" bindscrolltolower="toLower">
   
   <!-- <scroll-view  scroll-x="true" style='height:50px;display:flex;line-height:50px;overflow:hidden;width:calc(100% - 150rpx); white-space:nowrap;'>
     <block wx:for="{{goods}}" wx:key="">

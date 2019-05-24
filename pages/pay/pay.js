@@ -34,16 +34,43 @@ Page({
   },
 
   pay: function (e) {
-    wx.showModal({
-      title: '支付提示',
-      content: '本程序仅用于演示，支付接口API已屏蔽！',
-      showCancel: false,
-      success: function (res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-        }
-      }
-    })
+    // wx.showModal({
+    //   title: '支付提示',
+    //   content: '本程序仅用于演示，支付接口API已屏蔽！',
+    //   showCancel: false,
+    //   success: function (res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //     }
+    //   }
+    // })
+    // Cash.request(Cash.api.CASH_CMS_WXPAY_WX_PAY, { "uOpenid": getApp().globalData.openId, "amount": I.data.num }, function (result) {
+    //   if (true == result.success) {
+    //     wx.requestPayment(
+    //       {
+    //         'timeStamp': result.data.timeStamp,
+    //         'nonceStr': result.data.nonceStr,
+    //         'package': result.data.package,
+    //         'signType': 'MD5',
+    //         'paySign': result.data.sign,
+    //         'success': function (res) {
+    //           wx.showToast({
+    //             title: '支付成功',
+    //             icon: 'success',
+    //             duration: 2000
+    //           })
+    //         },
+    //         'fail': function (res) { },
+    //         'complete': function (res) { }
+    //       })
+    //   } else {
+    //     wx.showModal({
+    //       title: '提示',
+    //       content: result.message,
+    //       showCancel: false
+    //     });
+    //   }
+    // });
   },
 
   /**
