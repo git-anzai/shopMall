@@ -21,14 +21,7 @@ Page({
   onLoad: function (options) {
 
     var that = this
-    wx.request({
-      url: app.data.apiUrl + '/goods/class',
-      success: function (res) {
-        that.setData({
-          classification: res.data.data
-        })
-      }
-    })
+
     wx.getStorage({
       key: 'userInfo',
       success: function (res) {
@@ -54,9 +47,6 @@ Page({
 
   },
 
-  onClickLeft: function () {
-    wx.switchTab({ url: '/pages/index/index' })
-  },
 
   updataimg: function () {
     var that = this
@@ -113,53 +103,7 @@ Page({
         " describle=" + value.describle +
         " name=" + value.name,
         " price=" + value.price)
-      wx.request({
-        url: app.data.apiUrl + '/goods/add',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        data: {
-          userId: that.data.userInfo.id,
-          classificationId: that.data.classId,
-          commetNum: 0,
-          describle: value.describle,
-          name: value.name,
-          price: value.price,
-          status: 0,
-          pageView: 0,
-          updateTime: util.formatTime(new Date())
-        },
-        success: function (res) {
-          console.log(res.data)
-          if (that.data.img != null) {
-            for (var i = 0; i < that.data.img.length; i++) {
-              console.log(that.data.img[i])
-              wx.uploadFile({
-                url: app.data.apiUrl + '/img/add',
-                filePath: that.data.img[i],
-                name: 'file',
-                formData: {
-                  goodsId: res.data.data.id,
-                },
-                success: function (res) {
-                  console.log(res.data)
-                  wx.switchTab({
-                    url: '/pages/index/index',
-                  })
-                },
-                fail: function () {
-                  wx.showToast({
-                    icon: 'none',
-                    title: '上传失败',
-                  })
-                }
-              })
-            }
-          }
-          wx.hideLoading()
-        },
-      })
+
     }
   },
   bindPickerChange: function (e) {

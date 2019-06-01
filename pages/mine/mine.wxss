@@ -1,5 +1,5 @@
 page{
-    background-color: #f8f7f7;
+    background-color: #ECECEC;
     height: 100%;
 }
 .userinfo{
@@ -20,7 +20,6 @@ page{
 }
 .userinfo-list{
     margin-top: 10px;
-    background-color: #fff;
     line-height: 2;
 }
 .userinfo-item{
@@ -32,4 +31,12 @@ page{
 }
 .title{
     flex: 1;
+}
+.box3,.box2{
+  width: 100%;
+  padding: 20rpx 30rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-top: 20px;
+  box-sizing: border-box;
 }

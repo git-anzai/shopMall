@@ -15,6 +15,11 @@ Page({
         userInfo: userInfo
       })
   },
+  goSignIn: function() {
+    wx.navigateTo({
+      url: '../signIn/singIn'
+    })
+  },
   onReady: function () {
     // 页面渲染完成
   },

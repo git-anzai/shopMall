@@ -1,11 +1,4 @@
 <view style='height:40rpx'></view>
-<van-nav-bar
-  title="标题"
-  left-text="返回"
-  left-arrow
-  bind:click-left="onClickLeft"
-/>
-
 <form bindsubmit="formSubmit">
   <view class='top-card'>
   <view class='title'>
@@ -19,7 +12,7 @@
 
   <view class='img-span'>
     <image wx:for="{{img}}" src='{{item}}' bindtap='updateimg' class='img'></image>
-    <image src='/img/add_image.png' bindtap='updataimg' class='img'></image>
+    <image src='../../images/add_image.png' bindtap='updataimg' class='img'></image>
   </view> 
 </view>
 

@@ -46,7 +46,11 @@ Page({
       }
     ]
   },
-
+  goAdd:function() {
+    wx.navigateTo({
+      url: '../add/add'
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

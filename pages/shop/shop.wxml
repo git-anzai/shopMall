@@ -38,23 +38,21 @@
   <image src="/pages/images/location.png" class="heard-location-icon" style='height:25rpx;width:25rpx;' />
   <text class="heard-location-text">当前位置：{{address}}</text>
 </view>
-<view style='font-size:28rpx;'> 
-  <view >
-    <view>当前店铺：</view>
-    <view>切换店铺</view>
-  </view>
+<view style='font-size:28rpx;'>
+  <view>当前店铺：</view>
+  <view>切换店铺</view>
   <view>店铺位置：</view>
   <view>店铺电话：</view>
 </view>
 <view class='searchBar'>
-    <view class='search'>
-      <icon size='20' type='search' style='margin:0 12rpx 0 12rpx'></icon>
-      <input placeholder='请输入关键字搜索' value='{{keywords}}' bindinput='inputWords' bindconfirm="bindSearch" style='width:86%;font-size:28rpx;'></input>
-    </view>
-    <view style='display:flex;align-items:center;'>
-      <button class='searchBtn' size='mini' bindtap='bindSearch'>搜索</button>
-    </view>
+  <view class='search'>
+    <icon size='20' type='search' style='margin:0 12rpx 0 12rpx'></icon>
+    <input placeholder='请输入关键字搜索' value='{{keywords}}' bindinput='inputWords' bindconfirm="bindSearch" style='width:86%;font-size:28rpx;'></input>
   </view>
+  <view style='display:flex;align-items:center;'>
+    <button class='searchBtn' size='mini' bindtap='bindSearch'>搜索</button>
+  </view>
+</view>
 
 <!--tab -->
 <!-- <view class="tab border-1px">
@@ -81,8 +79,8 @@
     </scroll-view>
   </view>
   <scroll-view scroll-y="true" style="height: 500px;" scroll-into-view="{{toView}}" class="foods-wrapper" bindscrolltolower="toLower">
-  
-  <!-- <scroll-view  scroll-x="true" style='height:50px;display:flex;line-height:50px;overflow:hidden;width:calc(100% - 150rpx); white-space:nowrap;'>
+
+    <!-- <scroll-view  scroll-x="true" style='height:50px;display:flex;line-height:50px;overflow:hidden;width:calc(100% - 150rpx); white-space:nowrap;'>
     <block wx:for="{{goods}}" wx:key="">
       <view style='display:inline-block;font-size:14px;min-width:80px;padding:0 12px;text-align:center;'>
         <view  data-index="{{index}}"  catchtap="turnMenu" >{{item.name}}</view>
@@ -141,7 +139,7 @@
             <!-- <view class="desc">另需配送费￥{{deliveryPrice}}元</view> -->
           </view>
           <view class="content-right" catchtap="pay">
-            <view class="pay enough" >
+            <view class="pay enough">
               去结算
               <!-- :class="payClass" -->
             </view>

@@ -1,14 +1,14 @@
 <view class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-    <text>{{userInfo.nickName}}</text>
+  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+  <text>{{userInfo.nickName}}</text>
+  <view bindtap='goSignIn'>去签到</view>
 </view>
 <view class="userinfo-list">
-    <view class="userinfo-item">
-        <text class="title">我的订单</text>
-        <text>></text>
-    </view>
-    <view class="userinfo-item">
-        <text class="title">我的收货地址</text>
-        <text>></text>
-    </view>
+
+  <view class='box2'>
+    <text>钱包</text>
+  </view>
+  <view class='box3'>
+    <text>帮助及反馈</text>
+  </view>
 </view>

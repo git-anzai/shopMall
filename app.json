@@ -1,13 +1,14 @@
 {
   "pages": [
-
     "pages/index/index",
+    "pages/authorize/authorize",
     "pages/shop/shop",
     "pages/mine/mine",
     "pages/market/market",
-        "pages/add/add",
-        "pages/pay/pay",
-    "pages/authorize/authorize"  ],
+    "pages/add/add",
+    "pages/pay/pay",
+    "pages/signIn/singIn"
+  ],
   "tabBar": {
     "color": "#858585",
     "selectedColor": "#2d8cf0",

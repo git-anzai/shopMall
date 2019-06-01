@@ -1,4 +1,5 @@
 // pages/goods/goods.js
+import requestApi from '../../common/request.js'
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk;
 Page({
@@ -1236,9 +1237,23 @@ Page({
     // window.alert('支付' + this.totalPrice + '元');
     //确认支付逻辑
     var resultType = "success";
-    wx.navigateTo({
-      url: '../pay/pay?resultType=' + resultType
+  // 
+  let param = {
+
+    list:[
+      {
+        id: 1, goods_name: "发布商品001", goods_num: 4, goods_price: '333', store_id:"1"}
+    ],
+    type:"1"
+  }
+    requestApi.request("http://39.97.224.136/App/order/makeOrder", param, (result) => {//signUp
+      wx.navigateTo({
+        url: '../pay/pay?resultType=' + resultType
+      })
+
     })
+
+  
   },
   //彈起購物車
   toggleList: function () {
@@ -1275,6 +1290,7 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+
     this.setData({
       payDesc: this.payDesc()
     });
@@ -1288,12 +1304,30 @@ Page({
   onShow: function () {
     let vm = this;
     vm.getUserLocation();
+    // 
+    let param = {
+        class_1:"1",
+        storeId:"1"
+
+    }
+    requestApi.request("http://39.97.224.136/App/Store/storeList", param, (result) => {//signUp
+
+    })
+
+   
+    requestApi.request("http://39.97.224.136/App/Goods/classList", param, (result) => {//signUp
+
+    })
+
+    requestApi.request("http://39.97.224.136/App/Goods/goodsList", param, (result) => {//signUp
+
+    })
+    //
   },
   getUserLocation: function () {
     let vm = this;
     wx.getSetting({
       success: (res) => {
-        console.log(res)
         // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
         // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
         // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
@@ -1348,7 +1382,6 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
-        console.log(JSON.stringify(res))
         var latitude = res.latitude
         var longitude = res.longitude
         var speed = res.speed
@@ -1369,7 +1402,6 @@ Page({
         longitude: longitude
       },
       success: function (res) {
-        console.log(JSON.stringify(res));
         let address = res.result.address
         vm.setData({
           address: address,

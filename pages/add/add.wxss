@@ -1,9 +1,11 @@
+page{
+  background: #ECECEC;
+}
 .link{
-  height: 5rpx;
+  height: 4rpx;
   background-color: #ECECEC;
   width: 95%;
-  position: relative;
-  left: 20rpx;
+  margin: 0 auto;
 }
 .top-card{
   background-color: white;
@@ -14,16 +16,21 @@
 }
 
 .top-card .title{
-  height: 70rpx;
-  margin-left: 30rpx;
-  padding-top:20rpx; 
+  padding:28rpx; 
   font-size: 30rpx;
 }
 
 .top-card .describle{
-  margin-left:30rpx; 
   font-size: 30rpx;
-  margin-top: 30rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+.top-card .describle textarea{
+  width: 100%;
+  border: 4rpx solid #ECECEC;
+  border-radius: 20rpx;
+  padding: 20rpx;
+    box-sizing: border-box;
 }
 
 .buttom-card{

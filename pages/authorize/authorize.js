@@ -1,7 +1,7 @@
 // pages/authorize/authorize.js
 import requestUrl from '../../utils/util.js'
 import requestApi from '../../common/request.js'
-var globalOpenId = getApp().globalData.openId;
+var app = getApp();
 Page({
 
   /**
@@ -38,33 +38,24 @@ Page({
       //   .catch((errorMsg) => {
       //     console.log(errorMsg)
       //   })
-      wx.getUserInfo({
-        success: (res) => {
-          console.log("userinfo", res)
-          //调用应用实例的方法获取全局数据
-          //更新数据
-          app.globalData.userInfo = res.userInfo;
-          wx.login({
-            success: function(res) {
-              var param = {
-                code: res
-              };
-              requestApi.request("https://dev.shijijiaming.cn:8003/App/User/userLogin", param, function(result) {
-                // if (true == result.success) {
-                //   $Message({ content: result.message });
-                //   setTimeout(function () {
-                //     wx.reLaunch({
-                //       url: '../index/index'
-                //     })
-                //   }, 1000);
-                // } else {
-                //   $Message({ content: result.message, type: 'error' });
-                // }
-              });
-            }
-          });
+      //调用应用实例的方法获取全局数据
+      //更新数据
+      app.globalData.userInfo = e.detail.userInfo;
+      var param = {
+        userInfo: app.globalData.userInfo,
+      };
+      requestApi.request("http://39.97.224.136/App/User/userUpdate", param, function(result) {
+        if ("A00006" == result.code) {
+          // $Message({ content: result.message });
+          setTimeout(function() {
+            wx.reLaunch({
+              url: '../shop/shop'
+            })
+          }, 1000);
+        } else {
+          // $Message({ content: result.message, type: 'error' });
         }
-      })
+      });
     }
   }
 })

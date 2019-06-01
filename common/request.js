@@ -7,6 +7,7 @@ const apis = {
 //网络请求
 function request(api, data, success, fail) {
   //console.log({ service: api, data: data });
+  data.openId = wx.getStorageSync("openId")||"";
   var header = {
     'Content-type': 'application/x-www-form-urlencoded'
   };
@@ -27,16 +28,16 @@ function request(api, data, success, fail) {
     success: function(res) {
       wx.hideNavigationBarLoading();
       console.log(res);
-      if(res.data.success==false){
-        wx.showModal({
-          title: '提示',
-          content: 'success false',
-          showCancel: false
-        });
+      if(res.data.code=="A00005"){
+        wx.showToast({
+          title: result.message || "",
+          icon: none,
+          duration: 2000
+        })
       }
       if (res.statusCode == 200) {
         var result = res.data;
-        if (result.error == 0) {
+        if (res.data.code == "A00006") {
           getApp().globalData.sess = result.sess;
           success && success(result);
         } else {
@@ -44,20 +45,20 @@ function request(api, data, success, fail) {
           if (fail) {
             fail(result);
           } else {
-            wx.showModal({
-              title: '提示',
-              content: '业务错误',
-              showCancel: false
-            });
+            wx.showToast({
+              title: result.message || "",
+              icon: none,
+              duration: 2000
+            })
           }
         }
       } else {
         //服务错误
-        wx.showModal({
-          title: '提示',
-          content: '当前服务器异常,请稍后尝试！',
-          showCancel: false
-        });
+        wx.showToast({
+          title: "当前服务器异常,请稍后尝试！",
+          icon: none,
+          duration: 2000
+        })
       }
     },
     fail: function(result) {
@@ -66,7 +67,12 @@ function request(api, data, success, fail) {
       wx.showModal({
         title: '提示',
         content: '当前网络环境不稳定，请稍后尝试！',
-        showCancel: false
+        showCancel: false,
+        success(res) {
+          wx.redirectTo({
+            url: '../authorize/authorize',//授权页面
+          })
+        }
       });
     },
     complete: function(res) {
