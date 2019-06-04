@@ -30,15 +30,15 @@ function request(api, data, success, fail) {
       console.log(res);
       if(res.data.code=="A00005"){
         wx.showToast({
-          title: result.message || "",
-          icon: none,
+          title: res.message || "",
+          icon: "none",
           duration: 2000
         })
       }
       if (res.statusCode == 200) {
         var result = res.data;
         if (res.data.code == "A00006") {
-          getApp().globalData.sess = result.sess;
+          // getApp().globalData.sess = result.sess;
           success && success(result);
         } else {
           //业务错误
@@ -47,7 +47,7 @@ function request(api, data, success, fail) {
           } else {
             wx.showToast({
               title: result.message || "",
-              icon: none,
+              icon: "none",
               duration: 2000
             })
           }
@@ -56,7 +56,7 @@ function request(api, data, success, fail) {
         //服务错误
         wx.showToast({
           title: "当前服务器异常,请稍后尝试！",
-          icon: none,
+          icon: "none",
           duration: 2000
         })
       }

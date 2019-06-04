@@ -1,0 +1,14 @@
+/* pages/menuList/menuList.wxss */
+view{
+  -webkit-overflow-scrolling: touch
+}
+.items {
+  border-bottom: 2rpx solid #ebeef5;
+  color: #606266;
+  padding:24rpx 20rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

@@ -1,48 +1,22 @@
-<!--pages/order/order.wxml-->
-<!--head -->
-<!--<view class="header">
- <view class="content-wrapper">
-      <view class="avatar">
-        <image src="http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg" style="width:64px;height:64px;"></image>
-      </view>
-      <view class="content">
-        <view class="title">
-          <image src="../image/brand@2x.png" style="width:30px;height:18px;"></image>
-          <span class="name">粥品香坊（回龙观）</span>
-        </view>
-        <view class="description">
-            蜂鸟专送/38分钟送达
-        </view>
-        <view v-if="seller.supports" class="support">
-          <span class="icon" :class="classMap[seller.supports[0].type]">
-            <image src="../image/decrease_1@2x.png" style="width:12px;height:12px;"></image>
-          </span>
-          <span class="text">在线支付满28减5</span>
-        </view>
-      </view>
-      <view class="supports-count">
-        <view class="count">5个</view>
-      </view>
-    </view>
-    <view class="bulletin-wrapper">
-      <image src="../image/bulletin@2x.png" style="width:22px;height:12px;"></image>
-      <span class="bulletin-text">"粥品香坊其烹饪粥料的秘方源于中国千年古法，在融和现代制作工艺，由世界烹饪大师屈浩先生领衔研发。坚守纯天然、0添加的良心品质深得消费者青睐，发展至今成为粥类的引领品牌。是2008年奥运会和2013年园博会指定餐饮服务商。"</span>
-    </view>
-    <view class="background">
-      <image src="http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg" style="width:100%;height:100%;"></image>
-    </view>
-  </view> -->
-<!--head -->
 <view class="heard-location" style='font-size:28rpx;padding:8rpx 10rpx;width:100%;border-bottom:12rpx solid #F4F4F4;'>
   <!-- background:#B38B2D;color:white; -->
   <image src="/pages/images/location.png" class="heard-location-icon" style='height:25rpx;width:25rpx;' />
   <text class="heard-location-text">当前位置：{{address}}</text>
 </view>
-<view style='font-size:28rpx;'>
-  <view>当前店铺：</view>
-  <view>切换店铺</view>
-  <view>店铺位置：</view>
-  <view>店铺电话：</view>
+<view style='font-size:28rpx;padding:0 20rpx'>
+  <view class='storeMsg'>
+    <view>
+      当前店铺：{{currentShop.store_name}}</view>
+    <view>
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{storeList}}" range-key="{{'store_name'}}">
+        <view class="picker">
+          切换店铺：{{storeList[index].store_name}}
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view>店铺位置：{{currentShop.stroe_address}}</view>
+  <view>店铺电话：{{currentShop.store_phone}}</view>
 </view>
 <view class='searchBar'>
   <view class='search'>
@@ -68,12 +42,12 @@
 </view> -->
 <!--tab -->
 
-<view class="goods" wx:if="{{status==0||item.status==status}}">
+<view class="goods">
   <view class="menu-wrapper">
     <scroll-view scroll-y="true" style="height: 450px;">
-      <view wx:for="{{goods}}" class="menu-item border-1px" bindtap="selectMenu" data-item-index="{{index}}">
+      <view wx:for="{{classList}}" class="menu-item {{currentClass-1==index?'selected':''}} border-1px "  wx:key="index" bindtap="selectMenu" data-item-index="{{index}}">
         <view class="text">
-          {{item.name}}
+          {{item.class_name}}
         </view>
       </view>
     </scroll-view>
@@ -88,33 +62,33 @@
     </block>
   </scroll-view> -->
 
-    <view wx:for="{{goods}}" class="food-list food-list-hook" wx:for-index="parentIndex">
-      <view id="order{{parentIndex}}" class="title">{{item.name}}</view>
-      <view wx:for="{{item.foods}}" class="food-item" wx:for-item="food" data-food="{{food}}">
+    <view class="food-list food-list-hook">
+    <!-- wx:for="{{goods}}"  wx:for-index="parentIndex" -->
+      <!-- <view id="order{{parentIndex}}" class="title">{{item.name}}</view> -->
+      <view wx:for="{{goodsList}}" class="food-item" wx:for-item="food" data-food="{{food}}"  wx:key="index" wx:for-index="index" >
         <view class="icon">
-          <image src="{{food.icon}}" style="width: 57px;height: 57px"></image>
+          <image src="../../images/none.jpg" style="width: 57px;height: 57px"></image>
         </view>
         <view class="content">
-          <view class="name">{{food.name}}</view>
-          <view class="desc">{{food.description}}</view>
+          <view class="name">{{food.goods_name}}</view>
+          <view class="desc">{{food.goods_introduce}}</view>
           <view class="extra">
-            <text class="count">月售{{food.sellCount}}</text>
-            <text class="count">好评{{food.rating}}</text>
+            <!-- <text class="count">月售{{food.sellCount}}</text> -->
+            <!-- <text class="count">好评{{food.rating}}</text> -->
           </view>
           <view class="price">
-            <view class="now">￥{{food.price}}</view>
-            <view class="old" wx:if="{{food.oldPrice}}">￥{{food.oldPrice}}</view>
+            <view class="now">￥{{food.goods_price}}</view>
+            <!-- <view class="old" wx:if="{{food.oldPrice}}">￥{{food.oldPrice}}</view> -->
           </view>
-
           <!--cartControl-->
           <view class="cartControl-wrapper">
             <view class="cartControl">
               <view name="fade">
-                <view class="cart-decrease" wx:if="{{food.Count > 0}}" data-item-index="{{index}}" data-parentIndex="{{parentIndex}}" catchtap="decreaseCart">
+                <view class="cart-decrease" wx:if="{{food.Count > 0}}"  data-parentIndex="{{index}}" catchtap="decreaseCart">
                   <view class="inner iconfont icon-jian" style="font-size:24px;color:#00A0DC;"></view>
                 </view>
                 <view class="cart-count" wx:if="{{food.Count > 0 }}">{{food.Count}}</view>
-                <view class=" iconfont icon-jia cart-add " style="color:#00A0DC; " data-item-index="{{index}}" data-parentIndex="{{parentIndex}}" catchtap="addCart"></view>
+                <view class=" iconfont icon-jia cart-add " style="color:#00A0DC; "  data-parentIndex="{{index}}" catchtap="addCart"></view>
               </view>
             </view>
           </view>
@@ -151,21 +125,21 @@
             <text class="empty" bindtap="empty">清空</text>
           </view>
           <view class="list-content">
-            <view class="shopcart-food" wx:for="{{carArray}}">
-              <text class="name">{{item.name}}</text>
-              <view class="price" wx:if="{{item.num > 0}}">
-                <span>￥{{item.price*item.num}}</span>
+            <view class="shopcart-food" wx:for="{{carArray}}"  wx:key="index" wx:key="index">
+              <text class="name">{{item.goods_name}}</text>
+              <view class="price" wx:if="{{item.goods_num > 0}}">
+                <span>￥{{item.goods_price*item.goods_num}}</span>
               </view>
 
               <!--cartControl-->
-              <view class="cartControl-wrapper" style="bottom:10px;" wx:if="{{item.num > 0}}">
+              <view class="cartControl-wrapper" style="bottom:10px;" wx:if="{{item.goods_num > 0}}">
                 <view class="cartControl" style="width:80px;">
                   <view name="fade">
-                    <view class="cart-decrease" style="display:inline-block;" data-item-index="{{item.index}}" data-parentIndex="{{item.parentIndex}}" catchtap="decreaseShopCart">
+                    <view class="cart-decrease" style="display:inline-block;" data-parentIndex="{{item.parentIndex}}" catchtap="decreaseShopCart">
                       <view class="inner iconfont icon-jian" style="font-size:24px;color:#00A0DC;"></view>
                     </view>
-                    <view class="cart-count" style="display:inline-block;width:32px;text-align:center;font-size:14px;">{{item.num}}</view>
-                    <view class=" iconfont icon-jia cart-add " style="font-size:24px;color:#00A0DC; padding:0;" data-item-index="{{item.index}}" data-parentIndex="{{item.parentIndex}}" catchtap="addShopCart"></view>
+                    <view class="cart-count" style="display:inline-block;width:32px;text-align:center;font-size:14px;">{{item.goods_num}}</view>
+                    <view class=" iconfont icon-jia cart-add " style="font-size:24px;color:#00A0DC; padding:0;"  data-parentIndex="{{item.parentIndex}}" catchtap="addShopCart"></view>
                   </view>
                 </view>
               </view>

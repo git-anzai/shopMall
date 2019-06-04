@@ -2,19 +2,21 @@
   <view class='in'>
     <view class='new-head'>
       <view class='sig-tl'>
-        <view class='tln'>已连续签到<label class='n'>{{newSignNum}}</label>天</view>
+        <!-- <view class='tln'>已连续签到<label class='n'>{{newSignNum}}</label>天</view> -->
       </view>
       <view class='sig-tr'>
-        <view class='tlf'>积分：<label class='f'>{{newSignIntegral}}</label></view>
-        <!-- <navigator url='' class='a-pai'>排行榜</navigator> -->
+        <!-- <view class='tlf'>积分：<label class='f'>{{newSignIntegral}}</label></view> -->
+        <navigator url='../integralDetails/integralDetails' style='color:#007fff'>积分明细></navigator>
       </view>
+
+      
       <!-- 未签到 -->
-      <view wx:if='{{!newSignBtnState}}' class='sig-qiu sig-qiu-no' style="background-image:url('https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/sign-no-btn-bg.png')"
+      <view wx:if='{{isSign}}' class='sig-qiu sig-qiu-no' style="background-image:url('https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/sign-no-btn-bg.png')"
        bindtap='signNewFn' data-num="{{newSignNum}}" >
         <label class='ti'>签到</label>
       </view>
       <!-- 已签到 -->
-      <view wx:if='{{newSignBtnState}}'  class='sig-qiu sig-qiu-yes' style="background-image:url('https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/sign-yes-btn-bg.png')">
+      <view wx:if='{{!isSign}}'  class='sig-qiu sig-qiu-yes' style="background-image:url('https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/sign-yes-btn-bg.png')">
         <label class='ti'>已签到</label>
       </view>
     </view>
@@ -29,12 +31,12 @@
           <!-- <label class='f f1' wx:if='{{continuityDays7}}'>+7积分</label> -->
           <!-- <label class='f f2' wx:if='{{continuityDays3}}'>+3积分</label> -->
         <!-- </view> --> 
-        <view class='mo-line'>
+        <view class='mo-line' wx:if="{{isNewSignedArr.length>0}}">
           <block wx:for="{{isNewSignedArr}}"  wx:for-item="v" wx:key="k">
             <label class="q {{v.status==1?'hover':''}}">+{{v.integral}}</label>
           </block>
         </view>
-        <view class='mo-ri'>
+        <view class='mo-ri' wx:if="{{isNewSignedArr.length>0}}">
            <block wx:for="{{isNewSignedArr}}"  wx:for-item="v" wx:key="k">
             <label class="t">{{v.date}}</label>
           </block>

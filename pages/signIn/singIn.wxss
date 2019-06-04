@@ -18,7 +18,7 @@ text-align: center;}
 font-size: 24rpx;  color: #fff!important;  text-align: center;  }
 .mo-fen .f.f1{ margin-left: 0;}
 .mo-fen .f.f2{ margin-left:41%;}
-.mo-line{ height: 50rpx; width: 100%; margin:0 28rpx; position: relative; margin-bottom: 15rpx; }
+.mo-line{ height: 50rpx; width: 100%; margin:0 8rpx; position: relative; margin-bottom: 15rpx; }
 .mo-line::after{ content: ""; width: 100%; height: 8rpx; background-color: #f9f9f9; 
 position: absolute; left: 0; top:24rpx; }
 .mo-line .q{ width: 50rpx; height: 50rpx; border-radius: 100%; background-color: #eaeaea;
@@ -26,17 +26,17 @@ position: absolute; left: 0; top:24rpx; }
 .mo-line .q:nth-of-type(1){ left:0;}
 .mo-line .q:nth-of-type(2){ left: 15%;}
 .mo-line .q:nth-of-type(3){ left: 30%;}
-.mo-line .q:nth-of-type(4){ left: 46%;}
-.mo-line .q:nth-of-type(5){ left: 63%;}
-.mo-line .q:nth-of-type(6){ left: 79%;}
-.mo-line .q:nth-of-type(7){ left: 95%;}
+.mo-line .q:nth-of-type(4){ left: 45%;}
+.mo-line .q:nth-of-type(5){ left: 61%;}
+.mo-line .q:nth-of-type(6){ left: 76%;}
+.mo-line .q:nth-of-type(7){ left: 91%;}
 .mo-line .q.hover{ background-color: #ffcc51;color: #fff;font-size: 20rpx;display: flex;align-items: center;justify-content: center }
-.mo-ri{ width: auto; height: 30rpx; margin:0 20rpx; position: relative;  }
+.mo-ri{ width: auto; height: 30rpx; margin:0 0rpx; position: relative;  }
 .mo-ri .t{ height: 30rpx; font-size: 24rpx; color: #999; position: absolute; left: 0; top: 0; z-index: 1;}
 .mo-ri .t:nth-of-type(1){ left:0;}
 .mo-ri .t:nth-of-type(2){ left: 15%;}
-.mo-ri .t:nth-of-type(3){ left: 30%;}
-.mo-ri .t:nth-of-type(4){ left: 46%;}
-.mo-ri .t:nth-of-type(5){ left: 62%;}
-.mo-ri .t:nth-of-type(6){ left: 78%;}
-.mo-ri .t:nth-of-type(7){ left: 93%;}
+.mo-ri .t:nth-of-type(3){ left: 31%;}
+.mo-ri .t:nth-of-type(4){ left: 45%;}
+.mo-ri .t:nth-of-type(5){ left: 61%;}
+.mo-ri .t:nth-of-type(6){ left: 76%;}
+.mo-ri .t:nth-of-type(7){ left: 90%;}

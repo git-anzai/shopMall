@@ -1,13 +1,10 @@
-page{
-    background-color: #ECECEC;
-    height: 100%;
-}
+/* pages/goodsDetail/goodsDetail.wxss */
 .userinfo{
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 15px;
+    
     background-color: #fff;
 }
 .userinfo-avatar{
@@ -25,17 +22,4 @@ page{
     display: flex;
     padding: 0 1em;
 }
-.userinfo-item:not(:last-child){
-    border-bottom: 1px solid #ddd;
-}
-.title{
-    flex: 1;
-}
-.box3,.box2{
-  width: 100%;
-  padding: 20rpx 30rpx;
-  background-color: white;
-  border-radius: 20rpx;
-  margin-top: 20px;
-  box-sizing: border-box;
-}
+

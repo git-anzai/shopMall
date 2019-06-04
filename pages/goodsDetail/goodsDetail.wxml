@@ -1,0 +1,33 @@
+<!--pages/goodsDetail/goodsDetail.wxml-->
+<view style='border-bottom:2px solid #eee;padding: 15px;'>
+  <view class="userinfo">
+    <view style='display:flex; align-items: center;'>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+      <text style='display:inline-block;margin-left:28rpx'>{{userInfo.nickName}}</text>
+    </view>
+    <view></view>
+  </view>
+  <view>發佈時間</view>
+</view>
+<view>
+   <view>商品标题</view>
+   <view>商品描述</view>
+<swiper indicator-dots="{{indicatorDots}}"
+ duration="{{duration}}" circular="true">
+  <block wx:for="{{imgUrls}}" wx:key="index">
+    <swiper-item>
+      <image src="../../images/none.jpg" class="slide-image" width="100" height="150" style='width:100%'/>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view style='display:flex;'>
+<view>¥1000</view>
+
+<view style='border:2px solid red;display:flex'>
+<view style='border-right:1px solid red'>砍价</view>
+<view>立即拍下</view>
+</view>
+</view>
+
+</view>

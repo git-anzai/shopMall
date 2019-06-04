@@ -46,12 +46,15 @@ Page({
       };
       requestApi.request("http://39.97.224.136/App/User/userUpdate", param, function(result) {
         if ("A00006" == result.code) {
-          // $Message({ content: result.message });
-          setTimeout(function() {
-            wx.reLaunch({
-              url: '../shop/shop'
-            })
-          }, 1000);
+            let param = {};
+            requestApi.request("http://39.97.224.136/App/User/userInfo", param, function (result) {
+              wx.setStorageSync('userId', result.data.id)
+              setTimeout(function () {
+                wx.reLaunch({
+                  url: '../shop/shop'
+                })
+              }, 1000);
+            });
         } else {
           // $Message({ content: result.message, type: 'error' });
         }

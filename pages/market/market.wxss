@@ -1,6 +1,21 @@
 page{
-  background-color: #eee;
+  /* background-color: #eee; */
 }
+.tab{
+	display: flex;
+	/* flex-direction: column; */
+  box-sizing: border-box;
+}
+.tabs-item {
+  padding:10rpx;box-sizing: border-box;
+  margin: 10rpx;
+}
+.tabs-item.selected{
+  box-sizing: border-box;
+  color: #2d8cf0;
+  border-bottom: 2px solid #2d8cf0;
+}
+
 .case-page{
   padding:20rpx;
 }

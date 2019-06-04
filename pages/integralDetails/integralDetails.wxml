@@ -1,0 +1,6 @@
+<view>
+  <view wx:for="{{list}}" wx:key="index"  class='items'>
+      <text>签到时间：{{item.created_at}}</text>
+      <view>领取积分：<text style='color:#ffcc51'>+{{item.integral}}</text></view>
+  </view>
+</view>

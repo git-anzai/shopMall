@@ -1,3 +1,4 @@
+import requestApi from '../../common/request.js'
 Page({
 
   /**
@@ -8,6 +9,8 @@ Page({
     array: ['不限时送货时间', '工作日送货', '双休日、假日送货'],
     index: 0,
     hasAddress: false,
+    orderList:[],
+    total_price:''
   },
   select: function (e) {
     this.setData({
@@ -77,10 +80,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var payId = options.id
-    // var data = json.homeIndex[payId]
-    // this.setData({
-      // data: data
-    // })
+    var orderCode = options.orderCode
+    console.log(orderCode)
+    let order_num = orderCode
+    let param = {
+      order_num: order_num
+    }
+    requestApi.request("http://39.97.224.136/App/order/orderDetail", param, (result) => {//signUp
+      if(result.code=="A00006"){
+        this.setData({
+          total_price: result.data.total_price,
+          orderList:result.data.list
+        })
+      }
+    })
   }
 })

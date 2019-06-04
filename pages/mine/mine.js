@@ -14,6 +14,19 @@ Page({
       this.setData({
         userInfo: userInfo
       })
+
+    // wx.getUserInfo({
+    //   success: (res) => {
+    //     console.log("userinfo", res)
+    //     //调用应用实例的方法获取全局数据
+    //     //更新数据
+    //     app.globalData.userInfo = res.userInfo;
+    //     var userInfo = app.globalData.userInfo;
+    //     this.setData({
+    //       userInfo: userInfo
+    //     })
+    //   }
+    // })
   },
   goSignIn: function() {
     wx.navigateTo({

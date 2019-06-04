@@ -12,25 +12,62 @@ Page({
     img: null,
     classId: null,
     classification: null,
-    userInfo: null
+    userInfo: null,
+    latitude:'',
+    longitude:''
   },
-
+  getAddress:function() {
+    wx.getLocation({
+      type: 'wgs84',
+      success:  (res) =>{
+        this.setData({
+          latitude: res.latitude,
+          longitude: res.longitude
+        })
+      },
+      fail: function (res) {
+        console.log('fail' + JSON.stringify(res))
+      }
+    })
+  },
+  updataimg: function () {
+    var that = this
+    wx.chooseImage({
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths
+        console.log(tempFilePaths)
+        wx.uploadFile({
+          url: 'http://39.97.224.136/App/Goods/uploadImg', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+              'userId': wx.getStorageSync("userId") || ''
+          },
+          success: function (res) {
+            var data = res.data
+            //do something
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getAddress();
+    // var that = this
 
-    var that = this
-
-    wx.getStorage({
-      key: 'userInfo',
-      success: function (res) {
-        console.log(res.data)
-        that.setData({
-          userInfo: res.data
-        })
-      },
-    })
+    // wx.getStorage({
+    //   key: 'userInfo',
+    //   success: function (res) {
+    //     console.log(res.data)
+    //     that.setData({
+    //       userInfo: res.data
+    //     })
+    //   },
+    // })
   },
 
   /**
@@ -47,22 +84,6 @@ Page({
 
   },
 
-
-  updataimg: function () {
-    var that = this
-    wx.chooseImage({
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        //
-        var tempFilePaths = res.tempFilePaths
-        that.setData({
-          img: tempFilePaths
-        })
-        console.log(res.tempFiles)
-        // console.log("临时路径"+tempFilePaths)
-      }
-    })
-  },
   formSubmit: function (e) {
     // console.log(e.detail.value)
     var that = this

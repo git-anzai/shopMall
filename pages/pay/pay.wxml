@@ -1,31 +1,28 @@
 <!--pages/home/home-details/pay.wxml-->
 <view>
     <view class='pay-header'>
-    
     </view>
-
     <view class='pay-main'>
         <view class='main-one'>
             <text>购物清单</text>
         </view>
-
-        <view class='main-two'>
-            <image src="{{data.image}}" class='main-image'></image>
+        <view wx:for="{{orderList}}"  wx:for-item="item"  wx:key="index" wx:for-index="index">
+           <view class='main-two'>
+            <image src="../../images/none.jpg" class='main-image'></image>
             <view class='main_left'>
-                <text class='main-title'>{{data.title}}</text>
-                <text class='main-price'>￥{{data.price}}</text>
+                <text class='main-title'>{{item.goods_name}}</text>
+                <text class='main-price'>￥{{item.goods_price}}</text>
             </view>
             <view class='main_right'>
-                <text>x{{data.value}}</text>
+                <text>x{{item.goods_num}}</text>
             </view>
         </view>
+        </view>
     </view>
-
     <!-- <view class='pay-mainTwo'>
       <view class='mianTwo-one'>
         <text>配送时间</text>
       </view>
-
       <view class='mainTwo-two'>
           <picker bindchange="select" value='{{index}}' range='{{array}}'>
               <view class='array'>
@@ -35,9 +32,6 @@
           </picker>
       </view>
     </view>  -->
-
-
-
     <!-- <view class='pay-mainThree'>
         <view class='mainThree-one'>
           <text>留言</text>
@@ -46,25 +40,20 @@
           <input placeholder="选填：给商家留言(100字以内)" auto-focus></input>
         </view>
     </view> -->
-
-
-
     <view class='pay-mainFive'>
         <view class='mainFive-one'>
             <text class='left'>订单总金额</text>
-            <text class='right'>￥{{data.price}}</text>
+            <text class='right'>￥{{total_price}}</text>
         </view>
         <!-- <view class='mainFive-two'>
             <text class='left'>运费</text>
             <text class='right'>+￥0</text>
         </view> -->
-         <view class='mainFive-three'>
+         <!-- <view class='mainFive-three'>
             <text class='left'>实际付款</text>
             <text class='right'>￥{{data.price}}</text>
-        </view> 
+        </view>  -->
     </view>
-
-  
     <view class='pay-Bottom' bindtap='pay'>
         <text>微信支付</text>
     </view>

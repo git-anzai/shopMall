@@ -1,10 +1,12 @@
 <view class="userinfo">
-  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-  <text>{{userInfo.nickName}}</text>
-  <view bindtap='goSignIn'>去签到</view>
+  <view style='display:flex; align-items: center;'>
+   <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+  <text style='display:inline-block;margin-left:16rpx'>{{userInfo.nickName}}</text>
+  </view>
+  <view bindtap='goSignIn' style='font-size:32rpx;padding:16rpx;border-radius:10rpx;box-shadow:0 0 20px rgba(93, 149, 242, 0.4)'>去签到</view>
+   <!-- <button bindtap='goSignIn' size='mini' bindtap='bindSearch'>去签到</button> -->
 </view>
 <view class="userinfo-list">
-
   <view class='box2'>
     <text>钱包</text>
   </view>
