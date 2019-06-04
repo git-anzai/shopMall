@@ -2,7 +2,7 @@
 <view>
   <view>完成付款后获取对方联系方式</view>
   <view>
-    <image src='../../images/none.jpg'></image>
+    <image src='../../images/none.jpg' class='main-img'></image>
     <text>图片标题</text>
   </view>
   <view>
@@ -10,5 +10,5 @@
     <text>100积分</text>
   </view>
 
-  <view style='border:1px solid red'>立即支付</view>
+  <view class='pay-Bottom'>立即支付</view>
 </view>

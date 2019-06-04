@@ -30,7 +30,7 @@ function request(api, data, success, fail) {
       console.log(res);
       if(res.data.code=="A00005"){
         wx.showToast({
-          title: res.message || "",
+          title: res.message || "请求失败",
           icon: "none",
           duration: 2000
         })
@@ -46,7 +46,7 @@ function request(api, data, success, fail) {
             fail(result);
           } else {
             wx.showToast({
-              title: result.message || "",
+              title: result.message || "请求失败",
               icon: "none",
               duration: 2000
             })

@@ -1,6 +1,6 @@
 {
   "pages": [
-
+    "pages/payment/payment",
     "pages/goodsDetail/goodsDetail",
     "pages/index/index",
     "pages/authorize/authorize",
@@ -10,10 +10,8 @@
     "pages/market/market",
     "pages/pay/pay",
     "pages/signIn/singIn",
-    "pages/integralDetails/integralDetails"
-    ,
-        "pages/order/order",
-        "pages/payment/payment"
+    "pages/integralDetails/integralDetails",
+    "pages/order/order"
   ],
   "tabBar": {
     "color": "#858585",

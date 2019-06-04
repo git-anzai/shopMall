@@ -55,7 +55,7 @@
         </view>  -->
     </view>
     <view class='pay-Bottom' bindtap='pay'>
-        <text>微信支付</text>
+        <text>立即支付</text>
     </view>
 </view>   
 
