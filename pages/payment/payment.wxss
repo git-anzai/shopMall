@@ -10,7 +10,33 @@
   font-size: 32rpx;
   text-align: center
 }
+.msg{
+  padding: 40rpx;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid;
+  margin:10px 10px 40px 10px;
+}
+.main{
+  box-sizing: border-box;
+  margin: 16rpx;
+  padding: 30rpx;
+  border: 1px solid
+}
+
 .main-img{
   width:120rpx;height:120rpx;
   vertical-align: middle;
+  margin-right: 40rpx;
+}
+.title{
+  font-size: 18px;
+}
+.txt{
+  padding:18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-top: 80px
 }
