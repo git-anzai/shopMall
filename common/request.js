@@ -17,7 +17,7 @@ function request(api, data, success, fail) {
   //console.log(getApp().globalData.sess);
   wx.showNavigationBarLoading();
   wx.request({
-    url: api,
+    url: 'http://39.97.224.136/'+api,
     method: 'POST',
     dataType: 'json',
     data: {
@@ -34,6 +34,7 @@ function request(api, data, success, fail) {
           icon: "none",
           duration: 2000
         })
+        success && success(res);
       }
       if (res.statusCode == 200) {
         var result = res.data;

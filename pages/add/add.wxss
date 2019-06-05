@@ -1,13 +1,15 @@
-page{
-  background: #ECECEC;
+page {
+  background: #ececec;
 }
-.link{
+
+.link {
   height: 4rpx;
-  background-color: #ECECEC;
+  background-color: #ececec;
   width: 95%;
   margin: 0 auto;
 }
-.top-card{
+
+.top-card {
   background-color: white;
   width: 100%;
   height: 730rpx;
@@ -15,25 +17,27 @@ page{
   position: relative;
 }
 
-.top-card .title{
-  padding:28rpx; 
+.top-card .title {
+  padding: 18rpx;
   font-size: 30rpx;
 }
 
-.top-card .describle{
+.top-card .describle {
   font-size: 30rpx;
-  padding: 30rpx;
+  padding: 16rpx 30rpx;
   box-sizing: border-box;
 }
-.top-card .describle textarea{
+
+.top-card .describle textarea {
   width: 100%;
-  border: 4rpx solid #ECECEC;
+  height: 100px;
+  border: 4rpx solid #ececec;
   border-radius: 20rpx;
   padding: 20rpx;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.buttom-card{
+.buttom-card {
   margin-top: 50rpx;
   width: 100%;
   height: 200rpx;
@@ -44,14 +48,15 @@ page{
   flex-direction: column;
 }
 
-.buttom-card .span{
+.buttom-card .span {
   position: relative;
   top: 30rpx;
   left: 30rpx;
   font-size: 35rpx;
   flex: 1;
 }
-.buttom-card image{
+
+.buttom-card image {
   position: relative;
   right: 50rpx;
   float: right;
@@ -59,26 +64,25 @@ page{
   height: 50rpx;
 }
 
-.buttom{
+.buttom {
   width: 100%;
-  position:fixed;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
   background-color: white;
 }
-.buttom button{
-  margin: 15rpx; 
+
+.buttom button {
+  margin: 15rpx;
   background-color: red;
-  color: #fff
-}
-.img-span{
-  position: absolute;
-  /* top: 400rpx; */
-  left: 40rpx;
-  bottom: 20rpx;
+  color: #fff;
 }
 
-.img{
+.img-span {
+  padding: 16rpx 0 0 34rpx;
+}
+
+.img {
   margin: 10rpx;
-  width:140rpx;
+  width: 140rpx;
   height: 140rpx;
 }

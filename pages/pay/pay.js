@@ -86,7 +86,7 @@ Page({
     let param = {
       order_num: order_num
     }
-    requestApi.request("http://39.97.224.136/App/order/orderDetail", param, (result) => {//signUp
+    requestApi.request("App/order/orderDetail", param, (result) => {//signUp
       if(result.code=="A00006"){
         this.setData({
           total_price: result.data.total_price,

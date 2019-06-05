@@ -153,7 +153,7 @@ Page({
       list: this.data.carArray,
       type: "1"
     }
-    requestApi.request("http://39.97.224.136/App/order/makeOrder", param, (result) => {//signUp
+    requestApi.request("App/order/makeOrder", param, (result) => {//signUp
       if ("A00006" == result.code) {
         wx.navigateTo({
           url: '../pay/pay?orderCode=' + result.data
@@ -217,7 +217,7 @@ Page({
   getStoreList: function () {
     let param = {
     }
-    requestApi.request("http://39.97.224.136/App/Store/storeList", param, (result) => {//signUp
+    requestApi.request("App/Store/storeList", param, (result) => {//signUp
       if (result.code == "A00006") {
         this.setData({
           storeList: result.data
@@ -234,7 +234,7 @@ Page({
     let param = {
       type:1
     }
-    requestApi.request("http://39.97.224.136/App/Goods/classList", param, (result) => {//signUp
+    requestApi.request("App/Goods/classList", param, (result) => {//signUp
       if (result.code == "A00006") {
         this.setData({
           classList: result.data
@@ -250,7 +250,7 @@ Page({
       storeId: storeId,
       type:1
     }
-    requestApi.request("http://39.97.224.136/App/Goods/goodsList", param, (result) => {
+    requestApi.request("App/Goods/goodsList", param, (result) => {
       if (result.code == "A00006") {
         this.setData({
           goodsList: result.data

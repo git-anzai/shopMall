@@ -86,6 +86,11 @@ Page({
       url: '../add/add'
     })
   },
+  goDetail:function() {
+    wx.navigateTo({
+      url: '../goodsDetail/goodsDetail'
+    })
+  },
   setTab: function (e) {
     const edata = e.currentTarget.dataset;
     this.setData({

@@ -1,22 +1,22 @@
 <view class="heard-location" style='font-size:28rpx;padding:8rpx 10rpx;width:100%;border-bottom:12rpx solid #F4F4F4;'>
   <!-- background:#B38B2D;color:white; -->
   <image src="../../images/location.png" class="heard-location-icon" style='height:25rpx;width:25rpx;' />
-  <text class="heard-location-text">当前位置：{{address}}</text>
+  <text class="heard-location-text txt" >当前位置：{{address}}</text>
 </view>
 <view style='font-size:28rpx;padding:0 20rpx'>
   <view class='storeMsg'>
-    <view>
+    <view class='txt'>
       当前店铺：{{currentShop.store_name}}</view>
     <view>
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{storeList}}" range-key="{{'store_name'}}">
-        <view class="picker">
+        <view class="picker" class='txt'>
           切换店铺：{{storeList[index].store_name}}
         </view>
       </picker>
     </view>
   </view>
-  <view>店铺位置：{{currentShop.stroe_address}}</view>
-  <view>店铺电话：{{currentShop.store_phone}}</view>
+  <view class='txt'>店铺位置：{{currentShop.stroe_address}}</view>
+  <view class='txt'>店铺电话：{{currentShop.store_phone}}</view>
 </view>
 <view class='searchBar'>
   <view class='search'>

@@ -47,7 +47,10 @@
   padding: 4rpx;
   width: 78%;
 }
-
+.txt{
+  color: #606266;
+  padding: 4rpx 0;
+}
 .goods {
   display: flex;
   /* position: absolute; */

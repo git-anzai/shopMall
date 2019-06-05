@@ -12,6 +12,11 @@ Page({
     ],
     duration: 1000
   },
+  payMent:function() {
+    wx.navigateTo({
+      url: '../payment/payment'
+    })
+  },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     wx.getUserInfo({

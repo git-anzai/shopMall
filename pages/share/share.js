@@ -1,20 +1,18 @@
-// pages/integralDetails/integralDetails.js
-import requestApi from '../../common/request.js'
+// pages/share/share.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list:[]
+
   },
-  integralDetails:function() {
-    var param = {}
-    requestApi.request("App/User/integralDetails", param, (result) => {//signUp
-      if(result.code=="A00006") {
-        this.setData({
-          list:result.data
-        })
+  rules:function() {
+    wx.showModal({
+      title: '砍价规则',
+      content: '企业的专业办公管理工具。与微信一致的沟通体验，提供丰富免费的办公应用，并与微信消息、小程序、微信支付等互通，助力企业高效办公和管理。',
+      showCancel: false,
+      success(res) {
       }
     })
   },
@@ -22,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.integralDetails();
+
   },
 
   /**

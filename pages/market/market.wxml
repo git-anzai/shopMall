@@ -7,9 +7,9 @@
 </view>
 <view class='case-page'>
   <view class='list-masonry'>
-    <view class='item-masonry' wx:for="{{note}}">
+    <view class='item-masonry' wx:for="{{note}}" bindtap='goDetail'>
       <image src='{{item.url}}' mode='widthFix'></image>
-      <text>{{item.title}}</text>
+      <text style='font-size:28rpx;color:#606266'>{{item.title}}</text>
     </view>
   </view>
 </view>

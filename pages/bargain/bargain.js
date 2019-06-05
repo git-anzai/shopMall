@@ -1,28 +1,18 @@
-// pages/integralDetails/integralDetails.js
-import requestApi from '../../common/request.js'
+// pages/bargain/bargain.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list:[]
+    share_query:true,
   },
-  integralDetails:function() {
-    var param = {}
-    requestApi.request("App/User/integralDetails", param, (result) => {//signUp
-      if(result.code=="A00006") {
-        this.setData({
-          list:result.data
-        })
-      }
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.integralDetails();
+
   },
 
   /**
@@ -70,7 +60,18 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      return {
+        title: "请为我助力",
+        path: '../index/index?share_query=' + this.data.share_query,
+        success:function(res) {
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail:function(res) {
+          console.log("转发成功:" + JSON.stringify(res));
+        }
+      }
+    }
   }
 })

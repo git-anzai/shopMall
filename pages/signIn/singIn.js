@@ -20,7 +20,7 @@ Page({
   //-------新签到---------
   signNewFn: function(e) {
     let param = {}
-    requestApi.request("http://39.97.224.136/App/User/signUp", param, (result) => {//
+    requestApi.request("App/User/signUp", param, (result) => {//
       if (result.code =="A00006") {
         this.setData({
           isSign:false
@@ -35,8 +35,7 @@ Page({
 
   integralSign:function() {
     var param = {};
-    console.log(33)
-    requestApi.request("http://39.97.224.136/App/User/integralSign", param, (result) => {//signUp
+    requestApi.request("App/User/integralSign", param, (result) => {//signUp
       this.setData({
         isNewSignedArr: result.data
       })
@@ -44,7 +43,7 @@ Page({
   },
   allreadySign:function() {
     var param = {}
-    requestApi.request("http://39.97.224.136/App/User/allreadySign", param, (result) => {//signUp
+    requestApi.request("App/User/allreadySign", param, (result) => {//signUp
       if (result.code == "A00006") {
         this.setData({
           isSign: false
