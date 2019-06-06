@@ -8,6 +8,7 @@ const apis = {
 function request(api, data, success, fail) {
   //console.log({ service: api, data: data });
   data.openId = wx.getStorageSync("openId")||"";
+  data.userId = wx.getStorageSync("userId") || '';
   var header = {
     'Content-type': 'application/x-www-form-urlencoded'
   };

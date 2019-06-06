@@ -23,9 +23,9 @@ Page({
       "store_update": "2019-05-22 14:07:03",
       "stroe_address": "222"
     }],
-    classList: [],
+    classList: [{ "id": "1", "class_name": "\u6d17\u62a4\u7c7b", "class_parent_id": "0", "class_type": "1", "class_create": "2019-06-01 16:01:30" }],
     currentClass: 1,
-    goodsList: [{ "id": "1", "goods_name": "\u53d1\u5e03\u5546\u54c1001", "Count": 0, "goods_introduce": "\u8fd9\u4e2a\u597d\u5389\u5bb3\u554a", "goods_image": null, "goods_create": "2019-05-16 19:38:54", "goods_class_1": "1", "goods_class_2": null, "goods_class_3": null, "goods_price": "333", "goods_stock": "888", "store_id": "1", "goods_update": "2019-05-27 19:39:13", "goods_type": "1" }, { "id": "2", "goods_name": "測試打開燒烤店", "Count":0,"goods_introduce": "\u8fd9\u4e2a\u597d\u5389\u5bb3\u554a", "goods_image": null, "goods_create": "2019-05-16 19:38:54", "goods_class_1": "1", "goods_class_2": null, "goods_class_3": null, "goods_price": "100", "goods_stock": "888", "store_id": "1", "goods_update": "2019-05-27 19:39:13", "goods_type": "1" }],
+    goodsList: [],
     index: 0,
     address: "",
     listShow: false,
@@ -62,10 +62,13 @@ Page({
   decreaseCart: function (e) {
     // var index = e.currentTarget.dataset.itemIndex;
     var parentIndex = e.currentTarget.dataset.parentindex;
+    if (this.data.goodsList[parentIndex].Count<=0){
+      return;
+    }
     this.data.goodsList[parentIndex].Count--;
     var num = this.data.goodsList[parentIndex].Count;
     var name = this.data.goodsList[parentIndex].goods_name;
-    var mark = 'a'+ parentIndex
+    var mark = 'a' + parentIndex + "b" + this.data.currentClass
     var price = this.data.goodsList[parentIndex].goods_price;
     var store_id = this.data.goodsList[parentIndex].store_id;
     var id = this.data.goodsList[parentIndex].id;
@@ -95,15 +98,27 @@ Page({
     }
   },
   decreaseShopCart: function (e) {
-    console.log(e)
     this.decreaseCart(e);
+  },
+  empty:function() {
+    for(var i =0;i<this.data.goodsList.length;i++){
+      this.data.goodsList[i].Count=0
+    }
+      this.data.carArray = []
+    this.setData({
+      goodsList:this.data.goodsList,
+      carArray: this.data.carArray,
+      cartShow:"none",
+      listShow: false
+    })
+    this.calTotalPrice();
 
   },
   //添加到购物车
   addCart(e) {
     var parentIndex = e.currentTarget.dataset.parentindex;
     this.data.goodsList[parentIndex].Count++;
-    var mark = 'a' + parentIndex
+    var mark = 'a' + parentIndex + "b" + this.data.currentClass
     var price = this.data.goodsList[parentIndex].goods_price;
     var num = this.data.goodsList[parentIndex].Count;
     var name = this.data.goodsList[parentIndex].goods_name;
@@ -149,20 +164,30 @@ Page({
   //結算
   pay() {
     //确认支付逻辑
-    let param = {
-      list: this.data.carArray,
-      type: "1"
+    let carArray = this.data.carArray
+    let num = 0;
+    for (let i = 0; i < carArray.length;i++ ){
+      num += carArray[i].goods_num
     }
-    requestApi.request("App/order/makeOrder", param, (result) => {//signUp
-      if ("A00006" == result.code) {
-        wx.navigateTo({
-          url: '../pay/pay?orderCode=' + result.data
-          // 
-        })
+    if(num<=0){
+      wx.showToast({
+        title: '请添加商品到购物车',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      let param = {
+        list: this.data.carArray,
+        type: "1"
       }
-    })
-
-
+      requestApi.request("App/order/makeOrder", param, (result) => {//signUp
+        if ("A00006" == result.code) {
+          wx.navigateTo({
+            url: '../pay/pay?orderCode=' + result.data
+          })
+        }
+      })
+    }
   },
   //彈起購物車
   toggleList: function () {
@@ -178,6 +203,7 @@ Page({
   },
   cartShow: function (fold) {
     console.log(fold);
+    
     if (fold == false) {
       this.setData({
         cartShow: 'block',
@@ -210,9 +236,9 @@ Page({
   onShow: function () {
     let vm = this;
     vm.getUserLocation();
-    // vm.getStoreList();
-    vm.getClassList();
-    // vm.getGoodsList();
+    vm.getStoreList();
+    // vm.getClassList();
+    vm.getGoodsList();
   },
   getStoreList: function () {
     let param = {
@@ -252,6 +278,9 @@ Page({
     }
     requestApi.request("App/Goods/goodsList", param, (result) => {
       if (result.code == "A00006") {
+        for(let i =0;i<result.data.length;i++){
+            result.data[i].Count=0
+        }
         this.setData({
           goodsList: result.data
         })

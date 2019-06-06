@@ -7,11 +7,11 @@
     </view>
     <view></view>
   </view>
-  <view style='color:#909399;font-size:24rpx;padding-top:12rpx;'>發佈時間</view>
+  <view style='color:#909399;font-size:24rpx;padding-top:12rpx;'>发布时间：{{goods.goods_create}}</view>
 </view>
 <view style='padding-top:30rpx;'>
-  <view class='title' style='font-size:30rpx;padding-left:28rpx;'>商品标题</view>
-  <view class='desc'>商品描述</view>
+  <view class='title' style='font-size:30rpx;padding-left:28rpx;'>{{goods.goods_name}}</view>
+  <view class='desc'>{{goods.goods_introduce}}</view>
   <swiper indicator-dots="{{indicatorDots}}" duration="{{duration}}" circular="true">
     <block wx:for="{{imgUrls}}" wx:key="index">
       <swiper-item>
@@ -20,9 +20,9 @@
     </block>
   </swiper>
   <view class='bottom'>
-    <view style='color:#F56C6C'>¥1000</view>
+    <view style='color:#F56C6C'>¥{{goods.goods_price}}</view>
     <view class='btn_warpper'>
-      <view style='border-right:1px solid #fff;background:#67C23A;color:#fff' class='button' >砍价</view>
+      <view style='border-right:1px solid #fff;background:#67C23A;color:#fff' class='button' bindtap='bargain'>砍价</view>
       <view class='button' style='background:#F56C6C;color:#fff' bindtap='payMent'>立即拍下</view>
     </view>
   </view>

@@ -1,42 +1,40 @@
-<view style='height:40rpx'></view>
-<form bindsubmit="formSubmit">
+<view style='height:30rpx'></view>
   <view class='top-card'>
     <view class='title'>
-      <input name="name" placeholder="标题品牌型号买家搜索内容"></input>
+      <input value="{{title}}" bindinput='inputTit' placeholder="标题品牌型号买家搜索内容"></input>
     </view>
     <view class='link'></view>
      <view class='img-span'>
       <view style='font-size:24rpx;color:#909399'>添加封面</view>
-      <image wx:for="{{img}}" src='{{item}}' bindtap='updateimg' class='img'></image>
-      <image src='../../images/add_image.png' bindtap='updataimg' class='img'></image>
+      <image src='../../images/add_image.png' bindtap='updateF' class='img'></image>
+      <image src='{{goods_cover}}' bindtap='updateF' class='img'></image>
     </view>
     <view class='describle'>
       <!-- <input name="describle" placeholder='商品描述'></input> -->
-      <textarea name="describle" placeholder="商品描述" />
+      <textarea value="{{descTxt}}" bindinput='inputDesc' placeholder="商品描述" />
     </view>
 
     <view class='img-span'>
       <view style='font-size:24rpx;color:#909399'>添加内容图片</view>
-      <image wx:for="{{img}}" src='{{item}}' bindtap='updateimg' class='img'></image>
       <image src='../../images/add_image.png' bindtap='updataimg' class='img'></image>
+      <image wx:for="{{descImg}}" wx:key="index" src='{{item}}' bindtap='updateimg' class='img'></image>
     </view>
   </view>
 
   <view class='buttom-card'>
     <view class='span'>
-      <input name="price" placeholder='价格' type='digit'></input>
+      <input value="{{priceTxt}}" bindinput='inputPrice' placeholder='价格' type='digit'></input>
     </view>
     <view class='link'></view>
 
     <view class='span'>
-      <picker bindchange="bindPickerChange" range-key='name' range="{{classification}}" value='{{index}}'>
-        分类:
-        <text>{{classification[index].name}}</text>
+       <picker bindchange="bindPickerChange" value="{{index}}" range="{{classList}}" range-key="{{'class_name'}}">
+            分类:
+          <text>{{classList[index].class_name}}</text>
       </picker>
     </view>
   </view>
 
   <view class='buttom'>
-    <button form-type='submit'>确认发布</button>
+    <button form-type='submit' bindtap='subMit'>确认发布</button>
   </view>
-</form>

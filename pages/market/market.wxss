@@ -1,5 +1,5 @@
 page{
-  /* background-color: #eee; */
+  background-color: #F2F6FC;
 }
 .tab{
 	display: flex;
@@ -22,11 +22,13 @@ page{
 }
 .list-masonry{
   column-count: 2;
-  column-gap: 20rpx;
+  column-gap: 12rpx;
 
 }
 .item-masonry{
   background-color: #fff;break-inside: avoid; box-sizing: border-box; padding: 20rpx;
+  margin-bottom: 12rpx;
+  /* box-shadow:0 0 20px rgba(93, 149, 242, 0.4); */
 }
 .item-masonry image {
   width: 100%;

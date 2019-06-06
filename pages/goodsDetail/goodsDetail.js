@@ -1,5 +1,6 @@
 //logs.js
-const util = require('../../utils/util.js')
+const util = require('../../utils/util.js');
+import requestApi from '../../common/request.js'
 
 var app = getApp()
 Page({
@@ -10,15 +11,82 @@ Page({
       'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
       'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
     ],
-    duration: 1000
+    duration: 1000,
+    orderId:'',
+    goods:{}
   },
   payMent:function() {
-    wx.navigateTo({
-      url: '../payment/payment'
+    this.bargain();
+ 
+  },
+  bargain:function() {
+    
+    let param = {
+      goodsId: this.data.goods.id
+    }
+    requestApi.request("App/Order/ifBargain", param, (result) => {
+      if (result.code == "A00006") {
+        let params = {
+          orderId: this.data.orderId,
+          key: result.data
+        }
+        let param = JSON.stringify(params)
+        wx.navigateTo({
+          url: '../bargain/bargain?param=' + param
+        })
+      } else {
+        this.markOrder();
+      }
+    }) 
+  },
+  markOrder:function() {
+    let obj = { store_id:this.data.goods.store_id,id:this.data.goods.id,goods_num:1}
+    let param = {
+      list: [obj],
+      type: 2
+    }
+    requestApi.request("App/order/makeOrder", param, (result) => {//signUp
+      if(result.code=="A00006"){
+       
+        this.setData({
+          orderId:result.data
+        })
+        this.shareKey();
+      }
+    })
+  },
+  shareKey:function() {
+    let param ={orderId:this.data.orderId}
+    requestApi.request("App/Order/shareKey", param, (result) => {//signUp
+      if (result.code == "A00006") {
+        console.log(result)
+        let params = {
+          orderId:this.data.orderId,
+          key:result.data
+        }
+        let param = JSON.stringify(params)
+         wx.navigateTo({
+           url: '../bargain/bargain?param=' + param
+          })
+      }
+    })
+  },
+  getGoods: function (id) {
+    let param = {
+      id:id
+    }
+    requestApi.request("App/Goods/goodsDetail", param, (result) => {
+      if (result.code == "A00006") {
+        this.setData({
+          goods: result.data
+        })
+        console.log(result)
+      }
     })
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    this.getGoods(options.id);
     wx.getUserInfo({
       success: (res) => {
         console.log("userinfo", res)

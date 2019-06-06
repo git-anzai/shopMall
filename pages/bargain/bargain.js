@@ -1,4 +1,5 @@
 // pages/bargain/bargain.js
+import requestApi from '../../common/request.js'
 Page({
 
   /**
@@ -8,11 +9,17 @@ Page({
     share_query:true,
   },
 
+  bargainShare:function(param) {
+    requestApi.request("App/Order/bargainShare", param, (result) => {
+     
+    })  
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let params = JSON.parse(options.param)
+    this.bargainShare(params)
   },
 
   /**

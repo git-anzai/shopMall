@@ -1,15 +1,16 @@
 <view style='box-shadow:1px 1px 6px #dfdfdf;'>
   <scroll-view scroll-x="true" style="width: 100%;white-space:nowrap;background:#fff;box-sizing: border-box;">
     <view class="tab " style='font-size:12px'>
-      <view wx:for="{{tabnav.tabitem}}" bindtap="setTab" data-tabindex="{{index}}"  class="tabs-item {{showtab==index?'selected':''}}">{{item.text}}</view>
+      <view wx:for="{{tabitem}}" bindtap="setTab" data-tabindex="{{index}}" data-id="{{item.id}}"  class="tabs-item {{showtab==index?'selected':''}}">{{item.class_name}}</view>
     </view>
   </scroll-view>
 </view>
 <view class='case-page'>
   <view class='list-masonry'>
-    <view class='item-masonry' wx:for="{{note}}" bindtap='goDetail'>
-      <image src='{{item.url}}' mode='widthFix'></image>
-      <text style='font-size:28rpx;color:#606266'>{{item.title}}</text>
+    <view class='item-masonry' wx:for="{{note}}" bindtap='goDetail'  data-id="{{item.id}}" wx:key="index">
+      <image src='{{item.goods_cover}}' mode='widthFix'></image>
+      <text style='font-size:32rpx;color:#606266'>{{item.goods_name}}</text>
+      <view style='font-size:24rpx;color:#909399;text-indent:64rpx;'>{{item.goods_introduce}}</view>
     </view>
   </view>
 </view>

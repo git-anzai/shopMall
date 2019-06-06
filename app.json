@@ -1,7 +1,5 @@
 {
   "pages": [
-    
-    "pages/share/share",
     "pages/index/index",
     "pages/authorize/authorize",
     "pages/shop/shop",
@@ -14,7 +12,9 @@
     "pages/order/order",
     "pages/payment/payment",
     "pages/bargain/bargain",
-    "pages/goodsDetail/goodsDetail"  ],
+    "pages/goodsDetail/goodsDetail",
+    "pages/share/share"
+  ],
   "tabBar": {
     "color": "#858585",
     "selectedColor": "#2d8cf0",
