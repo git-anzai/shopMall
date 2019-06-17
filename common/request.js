@@ -1,5 +1,5 @@
 //服务器地址
-const host = "https://dev.shijijiaming.cn:8003";
+const host = "";
 //API定义
 const apis = {
   APP_USER_USERLOGIN:"App/User/userLogin"
@@ -17,8 +17,9 @@ function request(api, data, success, fail) {
   // }
   //console.log(getApp().globalData.sess);
   wx.showNavigationBarLoading();
+  // http://39.97.224.136/
   wx.request({
-    url: 'http://39.97.224.136/'+api,
+    url: 'https://www.zdzzk.com/'+api,
     method: 'POST',
     dataType: 'json',
     data: {

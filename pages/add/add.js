@@ -55,7 +55,7 @@ Page({
         var tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths)
         wx.uploadFile({
-          url: 'http://39.97.224.136/App/Goods/uploadImg', //仅为示例，非真实的接口地址
+          url: 'https://www.zdzzk.com/App/Goods/uploadImg', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
@@ -78,7 +78,7 @@ Page({
       success: function(res) {
         var tempFilePaths = res.tempFilePaths
         wx.uploadFile({
-          url: 'http://39.97.224.136/App/Goods/uploadImg', //仅为示例，非真实的接口地址
+          url: 'https://www.zdzzk.com/App/Goods/uploadImg', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {

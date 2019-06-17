@@ -7,6 +7,9 @@
    <!-- <button bindtap='goSignIn' size='mini' bindtap='bindSearch'>去签到</button> -->
 </view>
 <view class="userinfo-list">
+<view class='box2'>
+    <text>我的订单</text>
+  </view>
   <view class='box2'>
     <text>钱包</text>
   </view>
