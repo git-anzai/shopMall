@@ -16,8 +16,9 @@ Page({
     goods:{}
   },
   payMent:function() {
-    this.bargain();
- 
+    wx.navigateTo({
+      url: '../payment/payment?param=' 
+    })
   },
   bargain:function() {
     

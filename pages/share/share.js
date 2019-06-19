@@ -7,7 +7,7 @@ Page({
   data: {
 
   },
-  rules:function() {
+  rules: function () {
     wx.showModal({
       title: '砍价规则',
       content: '企业的专业办公管理工具。与微信一致的沟通体验，提供丰富免费的办公应用，并与微信消息、小程序、微信支付等互通，助力企业高效办公和管理。',
@@ -20,7 +20,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.showToast({
+      title: options.orderId,
+      icon: 'none',
+      duration: 4000
+    })
   },
 
   /**
@@ -48,6 +52,21 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    wx.reLaunch({
+      url: '../shop/shop'
+    })
+    var that = this;
+    var pages = getCurrentPages(); // 当前页面  
+    var beforePage = pages[pages.length - 2]; // 前一个页面  
+    beforePage.onLoad(); // 执行前一个页面的onLoad方法  
+
+    try {
+      var beforePage2 = pages[pages.length - 3]; // 前一个页面  
+      beforePage2.onLoad(); // 执行前一个页面的onLoad方法  
+    } catch (error){
+      console.log(1)
+    }
+
 
   },
 

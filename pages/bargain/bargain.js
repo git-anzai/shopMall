@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    share_query:true,
+    orderId:"",
+    key: ""
   },
 
   bargainShare:function(param) {
@@ -19,6 +20,10 @@ Page({
    */
   onLoad: function (options) {
     let params = JSON.parse(options.param)
+    this.setData({
+      orderId:params.orderId,
+      key:params.key
+    })
     this.bargainShare(params)
   },
 
@@ -69,14 +74,15 @@ Page({
    */
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
+      let _this = this;
       return {
         title: "请为我助力",
-        path: '../index/index?share_query=' + this.data.share_query,
+        path: 'pages/index/index?orderId=' + _this.data.orderId+"&key="+_this.data.key, 
         success:function(res) {
-          console.log("转发成功:" + JSON.stringify(res));
+          // console.log("转发成功:" + JSON.stringify(res));
         },
         fail:function(res) {
-          console.log("转发成功:" + JSON.stringify(res));
+          // console.log("转发成功:" + JSON.stringify(res));
         }
       }
     }

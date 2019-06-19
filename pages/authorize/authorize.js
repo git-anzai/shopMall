@@ -10,7 +10,8 @@ Page({
   data: {
     // 判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'), //获取用户信息是否在当前版本可用
-    option:''
+    orderId:'',
+    key:""
   },
 
   /**
@@ -18,7 +19,8 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      option: options
+      orderId: options.orderId,
+      key:options.key
     })
   },
   bindGetUserInfo: function(e) { //点击的“拒绝”或者“允许
@@ -31,10 +33,11 @@ Page({
       };
       requestApi.request("App/User/userUpdate", param, (result)=> {
         if ("A00006" == result.code) {
-          if (this.data.option.share_query){
-            setTimeout(function () {
+          console.log(this.data.option)
+          if (this.data.orderId&&this.data.key){
+            setTimeout( ()=> {
               wx.navigateTo({
-                url: '../bargin/bargin',
+                url: '../share/share?orderId= '+this.data.orderId+"&key="+this.data.key,
               })
             }, 1000)  
           } else {
