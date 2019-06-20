@@ -6,10 +6,15 @@ Page({
   data: {
     userInfo: {}
   },
+  goOrder: function () {
+    wx.navigateTo({
+      url: '../order/order'
+    })
+  },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     //调用应用实例的方法获取全局数据
-      //更新数据
+    //更新数据
 
 
     // wx.getUserInfo({
@@ -25,7 +30,7 @@ Page({
     //   }
     // })
   },
-  goSignIn: function() {
+  goSignIn: function () {
     wx.navigateTo({
       url: '../signIn/singIn'
     })

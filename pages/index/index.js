@@ -10,7 +10,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
   },
-  userLogin: function(loginRes, res, orderId, key) {
+  userLogin: function (loginRes, res, orderId, key, avatarUrl) {
     var param = {
       code: loginRes.code
     };
@@ -47,7 +47,7 @@ Page({
         } else { //未授权，跳到授权页面
           setTimeout(() => {
             wx.redirectTo({
-              url: '../authorize/authorize?orderId=' + orderId + "&key=" + key, //授权页面
+              url: '../authorize/authorize?orderId=' + orderId + "&key=" + key + "&avatarUrl=" + avatarUrl, //授权页面
             })
           }, 1000)
         }
@@ -56,12 +56,13 @@ Page({
   },
   onLoad: function(option) {
     let orderId = option.orderId;
-    let key = option.key
+    let key = option.key;
+    let avatarUrl = option.avatarUrl;
     wx.getSetting({
       success: (res) => {
         wx.login({
           success: loginRes => {
-            this.userLogin(loginRes, res, orderId, key)
+            this.userLogin(loginRes, res, orderId, key, avatarUrl)
           }
         })
       }

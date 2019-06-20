@@ -1,5 +1,6 @@
 // pages/bargain/bargain.js
 import requestApi from '../../common/request.js'
+var app = getApp();
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
    */
   data: {
     orderId:"",
-    key: ""
+    key: "",
+    avatarUrl:""
   },
 
   bargainShare:function(param) {
@@ -19,6 +21,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      avatarUrl: app.globalData.userInfo.avatarUrl
+    })
     let params = JSON.parse(options.param)
     this.setData({
       orderId:params.orderId,
@@ -77,7 +82,7 @@ Page({
       let _this = this;
       return {
         title: "请为我助力",
-        path: 'pages/index/index?orderId=' + _this.data.orderId+"&key="+_this.data.key, 
+        path: 'pages/index/index?orderId=' + _this.data.orderId+"&key="+_this.data.key+"&avatarUrl="+_this.data.avatarUrl, 
         success:function(res) {
           // console.log("转发成功:" + JSON.stringify(res));
         },

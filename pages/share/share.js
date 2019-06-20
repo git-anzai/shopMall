@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    orderId:"",
+    key:"",
+    avatarUrl:""
   },
   rules: function () {
     wx.showModal({
@@ -16,14 +18,23 @@ Page({
       }
     })
   },
+  bargain: function () {
+    let param = {
+      orderId:this.data.orderId,
+      key:this.data.key
+    }
+    requestApi.request("App/Order/bargainShare", param, (result) => {
+
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showToast({
-      title: options.orderId,
-      icon: 'none',
-      duration: 4000
+    this.setData({
+      key: options.key,
+      orderId: options.orderId,
+      avatarUrl: options.avatarUrl
     })
   },
 

@@ -10,18 +10,22 @@ Page({
   data: {
     // 判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'), //获取用户信息是否在当前版本可用
-    orderId:'',
-    key:""
+    orderId:"",
+    key:"",
+    avatarUrl:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      orderId: options.orderId,
-      key:options.key
-    })
+    if(options.orderId&&options.key&&options.avatarUrl){
+      this.setData({
+        orderId: options.orderId,
+        key: options.key,
+        avatarUrl: options.avatarUrl
+      })
+    }
   },
   bindGetUserInfo: function(e) { //点击的“拒绝”或者“允许
     if (e.detail.userInfo) { //点击了“允许”按钮，
@@ -33,11 +37,11 @@ Page({
       };
       requestApi.request("App/User/userUpdate", param, (result)=> {
         if ("A00006" == result.code) {
-          console.log(this.data.option)
-          if (this.data.orderId&&this.data.key){
+          console.log(this)
+          if (this.data.orderId != "undefined" && this.data.key != "undefined" && this.data.avatarUrl != "undefined" ){
             setTimeout( ()=> {
               wx.navigateTo({
-                url: '../share/share?orderId= '+this.data.orderId+"&key="+this.data.key,
+                url: '../share/share?orderId= ' + this.data.orderId + "&key=" + this.data.key + "&avatarUrl=" + this.data.avatarUrl,
               })
             }, 1000)  
           } else {

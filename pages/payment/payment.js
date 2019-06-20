@@ -1,4 +1,5 @@
 // pages/payment/payment.js
+import requestApi from '../../common/request.js'
 Page({
 
   /**
@@ -7,12 +8,22 @@ Page({
   data: {
 
   },
-
+  integralPay: function (orderId) {
+    let param = {
+      order_num: orderId
+    }
+    requestApi.request("App/order/integralPay", param, (result) => {//signUp
+      if (result.code == "A00006") {
+      
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let orderId = options.orderId;
+    this.integralPay(orderId);
   },
 
   /**

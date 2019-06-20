@@ -16,12 +16,28 @@ Page({
     goods:{}
   },
   payMent:function() {
-    wx.navigateTo({
-      url: '../payment/payment?param=' 
-    })
+    let orderId = wx.getStorageSync("orderId") || '';
+    if(orderId){
+      wx.navigateTo({
+        url: '../payment/payment?orderId=' + orderId
+      })
+    }else{
+      let obj = { store_id: this.data.goods.store_id, id: this.data.goods.id, goods_num: 1 }
+      let param = {
+        list: [obj],
+        type: 2
+      }
+      requestApi.request("App/order/makeOrder", param, (result) => {//signUp
+        if (result.code == "A00006") {
+          let orderId = result.data;
+          wx.navigateTo({
+            url: '../payment/payment?orderId='+orderId
+          })
+        }
+      })
+    }
   },
   bargain:function() {
-    
     let param = {
       goodsId: this.data.goods.id
     }
@@ -31,6 +47,11 @@ Page({
           orderId: this.data.orderId,
           key: result.data
         }
+        wx.showToast({
+          title: result.message,
+          icon: "none",
+          duration: 2000
+        })
         let param = JSON.stringify(params)
         wx.navigateTo({
           url: '../bargain/bargain?param=' + param
@@ -48,10 +69,10 @@ Page({
     }
     requestApi.request("App/order/makeOrder", param, (result) => {//signUp
       if(result.code=="A00006"){
-       
         this.setData({
           orderId:result.data
         })
+        wx.setStorageSync('orderId', result.data);
         this.shareKey();
       }
     })
