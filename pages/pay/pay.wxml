@@ -7,7 +7,7 @@
             <text>购物清单</text>
         </view>
         <view wx:for="{{orderList}}"  wx:for-item="item"  wx:key="index" wx:for-index="index">
-           <view class='main-two'>
+           <view style='width:100%;overflow:hidden'>
             <image src="../../images/none.jpg" class='main-image'></image>
             <view class='main_left'>
                 <text class='main-title'>{{item.goods_name}}</text>

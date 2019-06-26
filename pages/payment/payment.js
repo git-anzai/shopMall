@@ -6,15 +6,38 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    detail :{},
+    sellOpenid: '',
+    orderId: '',
+    total_price:''
   },
-  integralPay: function (orderId) {
+  detail: function (orderId) {
     let param = {
       order_num: orderId
     }
-    requestApi.request("App/order/integralPay", param, (result) => {//signUp
+    requestApi.request("App/order/orderDetail", param, (result) => {//signUp
       if (result.code == "A00006") {
-      
+        console.log(result)
+        this.setData({
+            detail:result.data.list[0],
+            total_price: result.data.total_price
+         })
+         console.log(this.data.detail)
+      }
+    })
+
+  
+  },
+  payMent:function() {
+    let param = {
+      sellOpenid: this.data.sellOpenid,
+      order_num: this.data.orderId
+    }
+    requestApi.request("App/order/integralPay", param, (result) => {
+      if (result.code == "A00006") {
+          this.setData({
+            detail:result[0]
+          })
       }
     })
   },
@@ -23,7 +46,12 @@ Page({
    */
   onLoad: function (options) {
     let orderId = options.orderId;
-    this.integralPay(orderId);
+    console.log(options)
+    this.setData({
+      sellOpenid: options.sellOpenid,
+      orderId: options.orderId
+    })
+    this.detail(orderId);
   },
 
   /**

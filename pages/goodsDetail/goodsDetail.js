@@ -18,8 +18,9 @@ Page({
   payMent:function() {
     let orderId = wx.getStorageSync("orderId") || '';
     if(orderId){
+      console.log(this.data.goods)
       wx.navigateTo({
-        url: '../payment/payment?orderId=' + orderId
+        url: '../payment/payment?orderId=' + orderId + "&sellOpenid=" + this.data.goods.user_openid
       })
     }else{
       let obj = { store_id: this.data.goods.store_id, id: this.data.goods.id, goods_num: 1 }
@@ -31,7 +32,7 @@ Page({
         if (result.code == "A00006") {
           let orderId = result.data;
           wx.navigateTo({
-            url: '../payment/payment?orderId='+orderId
+            url: '../payment/payment?orderId=' + orderId + "&sellOpenid=" + this.data.goods.user_openid
           })
         }
       })

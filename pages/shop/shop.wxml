@@ -1,3 +1,6 @@
+<!-- 左右滑动 -->
+
+<view>
 <view class="heard-location" style='font-size:28rpx;padding:8rpx 10rpx;width:100%;border-bottom:12rpx solid #F4F4F4;'>
   <!-- background:#B38B2D;color:white; -->
   <image src="../../images/location.png" class="heard-location-icon" style='height:25rpx;width:25rpx;' />
@@ -28,129 +31,90 @@
   </view>
 </view>
 
-<!--tab -->
-<!-- <view class="tab border-1px">
-   <view class="tab-item">
-    <a class="{{status==0 ? 'active':''}}" bindtap="tabChange" data-type="0">商品</a>
-   </view> 
-   <view class="tab-item">
-    <a class="{{status==1 ? 'active':''}}" bindtap="tabChange" data-type="1">评论</a>
-   </view> 
-   <view class="tab-item">
-    <a class="{{status==2 ? 'active':''}}" bindtap="tabChange" data-type="2">商家</a>
-   </view>
-</view> -->
-<!--tab -->
-
-<view class="goods">
-  <view class="menu-wrapper">
-    <scroll-view scroll-y="true" style="height: 450px;">
-      <view wx:for="{{classList}}" class="menu-item {{currentClass-1==index?'selected':''}} border-1px "  wx:key="index" bindtap="selectMenu" data-item-index="{{index}}">
-        <view class="text">
-          {{item.class_name}}
-        </view>
-      </view>
-    </scroll-view>
-  </view>
-  <scroll-view scroll-y="true" style="height: 500px;" scroll-into-view="{{toView}}" class="foods-wrapper" bindscrolltolower="toLower">
-
-    <!-- <scroll-view  scroll-x="true" style='height:50px;display:flex;line-height:50px;overflow:hidden;width:calc(100% - 150rpx); white-space:nowrap;'>
-    <block wx:for="{{goods}}" wx:key="">
-      <view style='display:inline-block;font-size:14px;min-width:80px;padding:0 12px;text-align:center;'>
-        <view  data-index="{{index}}"  catchtap="turnMenu" >{{item.name}}</view>
-      </view>
-    </block>
-  </scroll-view> -->
-
-    <view class="food-list food-list-hook">
-    <!-- wx:for="{{goods}}"  wx:for-index="parentIndex" -->
-      <!-- <view id="order{{parentIndex}}" class="title">{{item.name}}</view> -->
-      <view wx:for="{{goodsList}}" class="food-item" wx:for-item="food" data-food="{{food}}"  wx:key="index" wx:for-index="index" >
-        <view class="icon">
-          <image src="../../images/none.jpg" style="width: 57px;height: 57px"></image>
-        </view>
-        <view class="content">
-          <view class="name">{{food.goods_name}}</view>
-          <view class="desc">{{food.goods_introduce}}</view>
-          <view class="extra">
-            <!-- <text class="count">月售{{food.sellCount}}</text> -->
-            <!-- <text class="count">好评{{food.rating}}</text> -->
+  <!-- style='height:{{HZL_height1}}px' -->
+  <!-- 菜单 -->
+  <view wx:if='{{HZL_swiper_ID == 0}}' class='HZL_menu'>
+    <!-- style='height:{{HZL_height1}}px' -->
+    <!-- 左右联动 -->
+    <view class='HZL_scroll'>
+      <!-- 左 -->
+      <scroll-view class='HZL_scroll_left' scroll-with-animation="true" scroll-y="true" style="height:{{HZL_height}}px" scroll-top="{{HZL_leftToTop}}">
+        <view style="padding-bottom: 50rpx;">
+          <view HZL_scroll_left_text wx:for="{{constants}}" wx:key="class_id" bindtap="left" data-id="id{{item.class_id}}"  class='"HZL_scroll_left_text"'>
+          <!--  class='{{item.class_id === HZL_currentLeftSelect ?"HZL_scroll_left_text_active":}}' -->
+            <view id="id{{item.class_id}}" class='text'>
+              {{item.name}}
+            </view>
           </view>
-          <view class="price">
-            <view class="now">￥{{food.goods_price}}</view>
-            <!-- <view class="old" wx:if="{{food.oldPrice}}">￥{{food.oldPrice}}</view> -->
-          </view>
-          <!--cartControl-->
-          <view class="cartControl-wrapper">
-            <view class="cartControl">
-              <view name="fade">
-                <view class="cart-decrease" wx:if="{{food.Count > 0}}"  data-parentIndex="{{index}}" catchtap="decreaseCart">
-                  <view class="inner iconfont icon-jian" style="font-size:24px;color:#00A0DC;"></view>
+        </view>
+      </scroll-view>
+      <!-- 右 -->
+  <scroll-view scroll-with-animation="true" scroll-y="true" style="height:{{HZL_height}}px" bindscroll="right" scroll-into-view="{{HZL_toView}}" class='HZL_scroll_right'>
+        <view wx:for="{{constants}}" wx:for-index='parentIndex' wx:key="id" id="id{{item.class_id}}" class='food_item'>
+          <view class="HZL_scroll_right_top">{{item.name}}</view>
+          <view class="HZL_scroll_right_view" wx:for="{{item.goods}}" wx:key="index">
+            <view class="HZL_son">
+              <!-- {{item.category_name}} -->
+               <view class='icon'>
+                <image src='../../images/none.jpg' style='width:58px;height:58px;margin-right:20rpx;'></image>
+              </view>
+              <view class='content'>
+                <view class="name">{{item.goods_name}}</view>
+                <view class="desc">{{item.goods_introduce}}</view>
+                <view class="price">
+                 ￥{{item.goods_price}}
                 </view>
-                <view class="cart-count" wx:if="{{food.Count > 0 }}">{{food.Count}}</view>
-                <view class=" iconfont icon-jia cart-add " style="color:#00A0DC; "  data-parentIndex="{{index}}" catchtap="addCart"></view>
+              </view>
+            </view>
+            <view class="HZL_son1">
+              <view class='HZL_Grandson'></view>
+              <view class='HZL_Grandson1'>
+                <view wx:if='{{item.count == 0}}' class='HZL_num'></view>
+                <view wx:if='{{item.count == 0}}' class='HZL_num'></view>
+                <view wx:if='{{item.count > 0}}' class='HZL_jian' bindtap='HZL_jian' data-parentIndex='{{parentIndex}}' data-index='{{index}}'>-</view>
+                <view wx:if='{{item.count > 0}}' class='HZL_num'>{{item.num}}</view>
+                <view class='HZL_jia' bindtap='HZL_jia' data-parentIndex='{{parentIndex}}' data-index='{{index}}'>+</view>
               </view>
             </view>
           </view>
         </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 下面的购物车 -->
+<view wx:if='{{HZL_isCat > 0}}' class='HZL_cat_bottom' bindtap='HZL_isCat_close'></view>
+
+<view wx:if='{{HZL_isCat > 0}}' class='HZL_cat_bottom1'>
+  <view class='HZL_cat_bottom1_view'>
+    <view style='margin-left: 30rpx;'>购物车</view>
+    <view style='margin-right: 30rpx;color:rgb(0, 160, 220);' bindtap='HZL_zero'>清空</view>
+  </view>
+  <scroll-view class='HZL_cat_scroll' scroll-y='true'>
+    <view class='HZL_cat_scrollView' wx:for='{{HZL_my_cat}}' wx:key='HZL_my_cat'>
+      <view class='HZL_cat_scrollView_text'>{{item.name}}</view>
+      <view class='HZL_cat_scrollView_view'>
+        <view wx:if='{{item.num == 0}}' class='HZL_num'></view>
+        <view wx:if='{{item.num == 0}}' class='HZL_num'></view>
+        <view wx:if='{{item.num > 0}}' class='HZL_jian' bindtap='HZL_jian1' data-parentIndex='{{item.parentIndex}}' data-index='{{item.index}}'>-</view>
+        <view wx:if='{{item.num > 0}}' class='HZL_num'>{{item.num}}</view>
+        <view class='HZL_jia' bindtap='HZL_jia1' data-parentIndex='{{item.parentIndex}}' data-index='{{item.index}}'>+</view>
       </view>
     </view>
   </scroll-view>
+</view>
 
-  <!--shopCart-->
-  <view>
-    <view>
-      <view class="shopCart">
-        <view class="content" bindtap="toggleList">
-          <view class="content-left">
-            <view class="logo-wrapper">
-              <view class="logo highlight">
-                <view class="iconfont icon-gouwuche highlight"></view>
-              </view>
-              <view class="num" wx:if="{{totalCount> 0}}">{{totalCount}}</view>
-            </view>
-            <view class="price highlight">￥{{totalPrice}}</view>
-            <!-- <view class="desc">另需配送费￥{{deliveryPrice}}元</view> -->
-          </view>
-          <view class="content-right" catchtap="pay">
-            <view class="pay enough">
-              去结算
-              <!-- :class="payClass" -->
-            </view>
-          </view>
-        </view>
-        <view class="shopcart-list" style="display:{{cartShow}}">
-          <view class="list-header">
-            <view class="title">购物车</view>
-            <text class="empty" bindtap="empty">清空</text>
-          </view>
-          <view class="list-content">
-            <view class="shopcart-food" wx:for="{{carArray}}"  wx:key="index" wx:key="index">
-              <text class="name">{{item.goods_name}}</text>
-              <view class="price" wx:if="{{item.goods_num > 0}}">
-                <span>￥{{item.goods_price*item.goods_num}}</span>
-              </view>
 
-              <!--cartControl-->
-              <view class="cartControl-wrapper" style="bottom:10px;" wx:if="{{item.goods_num > 0}}">
-                <view class="cartControl" style="width:80px;">
-                  <view name="fade">
-                    <view class="cart-decrease" style="display:inline-block;" data-parentIndex="{{item.parentIndex}}" catchtap="decreaseShopCart">
-                      <view class="inner iconfont icon-jian" style="font-size:24px;color:#00A0DC;"></view>
-                    </view>
-                    <view class="cart-count" style="display:inline-block;width:32px;text-align:center;font-size:14px;">{{item.goods_num}}</view>
-                    <view class=" iconfont icon-jia cart-add " style="font-size:24px;color:#00A0DC; padding:0;"  data-parentIndex="{{item.parentIndex}}" catchtap="addShopCart"></view>
-                  </view>
-                </view>
-              </view>
-              <!--cartControl-->
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
+<!-- 购物车 -->
+<view wx:if='{{HZL_swiper_ID == 0}}' class='HZL_cat'>
+  <view style='flex:1;display:flex; align-items:center'>
+   <view class='HZL_cat_img_view' bindtap='HZL_isCat'>
+    <image src='../../images/shop-cat-on.png' class='HZL_cat_img'></image>
+    <view class='HZL_cat_num' wx:if='{{HZL_num > 0}}'>{{HZL_num}}</view>
   </view>
-  <view name="fade">
-    <view class="list-mask" wx:if="{{listShow}}" bindtap="hideList"></view>
+   <view class="totalPrice">￥{{totalPrice}}</view>
   </view>
+  <view class='HZL_cat_text' bindtap='pay'>去结算</view>
 </view>

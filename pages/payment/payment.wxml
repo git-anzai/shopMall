@@ -3,12 +3,12 @@
   <view class='msg'>完成付款后获取对方联系方式</view>
   <view class='main'>
     <image src='../../images/none.jpg' class='main-img'></image>
-    <text class='title'>图片标题</text>
+    <text class='title'>{{detail.goods_name}}</text>
   </view>
   <view class='txt'>
     <text>积分支出</text>
-    <text>100积分</text>
+    <text>{{total_price}}积分</text>
   </view>
 
-  <view class='pay-Bottom'>立即支付</view>
+  <view class='pay-Bottom' bindtap='payMent'>立即支付</view>
 </view>

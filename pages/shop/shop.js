@@ -1,9 +1,36 @@
 // pages/goods/goods.js
 import requestApi from '../../common/request.js'
+// const constants = require('../../utils/constants.js');
+// 右侧每一类的 bar 的高度（固定）
+const RIGHT_BAR_HEIGHT = 20;
+// 右侧每个子类的高度（固定）
+const RIGHT_ITEM_HEIGHT = 100;
+// 左侧每个类的高度（固定）
+const LEFT_ITEM_HEIGHT = 50
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk;
 Page({
   data: {
+    //是否显示下面的购物车
+    HZL_isCat: 0,
+    //购物车的商品
+    HZL_my_cat: [],
+    // 购物车的数量
+    HZL_num: 0,
+    //swiper滑动的数组
+    HZL_swiper_ID: 0,
+
+    //模拟 数据
+    constants: [],
+    // 左 => 右联动 右scroll-into-view 所需的id
+    HZL_toView: null,
+    // 当前左侧选择的
+    HZL_currentLeftSelect: null,
+    // 右侧每类数据到顶部的距离（用来与 右 => 左 联动时监听右侧滚动到顶部的距离比较）
+    HZL_eachRightItemToTop: [],
+    HZL_leftToTop: 0,
+    carArray:[],
+    totalPrice:0,
     storeList: [{
       "id": "1",
       "store_name": "\u6bcd\u5a74\u4e00\u53f7\u5e97",
@@ -23,23 +50,10 @@ Page({
       "store_update": "2019-05-22 14:07:03",
       "stroe_address": "222"
     }],
-    classList: [{ "id": "1", "class_name": "\u6d17\u62a4\u7c7b", "class_parent_id": "0", "class_type": "1", "class_create": "2019-06-01 16:01:30" }],
     currentClass: 1,
-    goodsList: [],
     index: 0,
     address: "",
-    listShow: false,
     currentShop: {},
-    goods: [],
-    scrollTop: 100,
-    foodCounts: 0,
-    totalPrice: 0,// 总价格
-    totalCount: 0, // 总商品数
-    carArray: [],
-    fold: true,
-    selectFoods: [{ price: 20, count: 2 }],
-    cartShow: 'none',
-    status: 0,
   },
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail)
@@ -51,125 +65,14 @@ Page({
     })
     this.getGoodsList();
   },
-  selectMenu: function (e) {
-    var index = e.currentTarget.dataset.itemIndex;
-    this.setData({
-      currentClass:index+1
-    })
-    this.getGoodsList();
-  },
-  //移除商品
-  decreaseCart: function (e) {
-    // var index = e.currentTarget.dataset.itemIndex;
-    var parentIndex = e.currentTarget.dataset.parentindex;
-    if (this.data.goodsList[parentIndex].Count<=0){
-      return;
-    }
-    this.data.goodsList[parentIndex].Count--;
-    var num = this.data.goodsList[parentIndex].Count;
-    var name = this.data.goodsList[parentIndex].goods_name;
-    var mark = 'a' + parentIndex + "b" + this.data.currentClass
-    var price = this.data.goodsList[parentIndex].goods_price;
-    var store_id = this.data.goodsList[parentIndex].store_id;
-    var id = this.data.goodsList[parentIndex].id;
-    var obj = { goods_price: price, goods_num: num, goods_name: name, store_id: store_id, mark: mark, id: id, parentIndex: parentIndex };
-    var carArray1 = this.data.carArray.filter(item => item.mark != mark)
-    carArray1.push(obj)
-    this.setData({
-      carArray: carArray1,
-      goodsList: this.data.goodsList
-    })
-    this.calTotalPrice()
-    //关闭弹起
-    var count1 = 0
-    for (let i = 0; i < this.data.carArray.length; i++) {
-      if (this.data.carArray[i].goods_num == 0) {
-        count1++;
-      }
-    }
-    //console.log(count1)
-    if (count1 == this.data.carArray.length) {
-      if (num == 0) {
-        this.setData({
-          cartShow: 'none',
-          listShow: false
-        })
-      }
-    }
-  },
-  decreaseShopCart: function (e) {
-    this.decreaseCart(e);
-  },
-  empty:function() {
-    for(var i =0;i<this.data.goodsList.length;i++){
-      this.data.goodsList[i].Count=0
-    }
-      this.data.carArray = []
-    this.setData({
-      goodsList:this.data.goodsList,
-      carArray: this.data.carArray,
-      cartShow:"none",
-      listShow: false
-    })
-    this.calTotalPrice();
-
-  },
-  //添加到购物车
-  addCart(e) {
-    var parentIndex = e.currentTarget.dataset.parentindex;
-    this.data.goodsList[parentIndex].Count++;
-    var mark = 'a' + parentIndex + "b" + this.data.currentClass
-    var price = this.data.goodsList[parentIndex].goods_price;
-    var num = this.data.goodsList[parentIndex].Count;
-    var name = this.data.goodsList[parentIndex].goods_name;
-    var store_id = this.data.goodsList[parentIndex].store_id;
-    var id = this.data.goodsList[parentIndex].id;
-    var obj = { goods_price: price, goods_num: num, goods_name: name, store_id: store_id, mark: mark, id: id, parentIndex: parentIndex};
-    var carArray1 = this.data.carArray.filter(item => item.mark != mark)
-    carArray1.push(obj)
-    this.setData({
-      carArray: carArray1,
-      goodsList: this.data.goodsList
-    })
-    this.calTotalPrice();
-  },
-  addShopCart: function (e) {
-    this.addCart(e);
-  },
-  //计算总价
-  calTotalPrice: function () {
-    var carArray = this.data.carArray;
-    var totalPrice = 0;
-    var totalCount = 0;
-    for (var i = 0; i < carArray.length; i++) {
-      totalPrice += carArray[i].goods_price * carArray[i].goods_num;
-      totalCount += carArray[i].goods_num;
-    }
-    this.setData({
-      totalPrice: totalPrice,
-      totalCount: totalCount,
-    });
-  },
-  //差几元起送
-  payDesc() {
-    if (this.data.totalPrice === 0) {
-      return `￥${this.data.minPrice}元起送`;
-    } else if (this.data.totalPrice < this.data.minPrice) {
-      let diff = this.data.minPrice - this.data.totalPrice;
-      return '还差' + diff + '元起送';
-    } else {
-      return '去结算';
-    }
-  },
-  //結算
   pay() {
     //确认支付逻辑
     let carArray = this.data.carArray
     let num = 0;
-    for (let i = 0; i < carArray.length;i++ ){
+    for (let i = 0; i < carArray.length; i++) {
       num += carArray[i].goods_num
     }
-    if(num<=0){
+    if (num <= 0) {
       wx.showToast({
         title: '请添加商品到购物车',
         icon: 'none',
@@ -189,56 +92,89 @@ Page({
       })
     }
   },
-  //彈起購物車
-  toggleList: function () {
-    if (!this.data.totalCount) {
-      return;
-    }
-    this.setData({
-      fold: !this.data.fold,
-    })
-    var fold = this.data.fold
-    //console.log(this.data.fold);
-    this.cartShow(fold)
-  },
-  cartShow: function (fold) {
-    console.log(fold);
-    
-    if (fold == false) {
-      this.setData({
-        cartShow: 'block',
-        listShow: true
+  onLoad: function () {
+    var that = this;
+    //导航栏的文字
+    wx.setNavigationBarTitle({
+      title: '商城',
+    }),
+      // 导航栏的文字颜色和背景的颜色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+      backgroundColor: '#00a0dc',
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn'
+        }
       })
-    } else {
-      this.setData({
-        cartShow: 'none',
-        listShow: false
-      })
-    }
-    console.log(this.data.cartShow);
-  },
-  tabChange: function (e) {
-    var showtype = e.target.dataset.type;
-    this.setData({
-      status: showtype,
+    //高度大小
+    wx.getSystemInfo({
+      success: function (res) {
+        var HZL_height = res.windowHeight - 50
+        var HZL_height1 = res.windowHeight - 110
+        that.setData({
+          HZL_height: HZL_height,
+          HZL_height1: HZL_height1
+        })
+      }
     });
-  },
-  onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
-
     qqmapsdk = new QQMapWX({
       key: 'ZFZBZ-ZN5KP-QE4DV-VSBLO-TT2H6-7ZFWJ'
     });
+    this.getGoodsList();
+    // that.setData({
+    //   // constants: this.data.constants,
+    //   // HZL_currentLeftSelect: this.data.constants[0].class_id,
+    //   // HZL_eachRightItemToTop: this.HZL_getEachRightItemToTop()
+    // })
+
+
   },
-  onReady: function () {
-    // 页面渲染完成
+  calTotalPrice: function () {
+    var carArray = this.data.carArray;
+    var totalPrice = 0;
+    var totalCount = 0;
+    console.log(carArray)
+    for (var i = 0; i < carArray.length; i++) {
+      
+      totalPrice += carArray[i].goods_price * carArray[i].num;
+      // totalCount += carArray[i].num;
+    }
+    this.setData({
+      // HZL_num: totalPrice,
+      totalPrice: totalPrice,
+    });
+  },
+  getGoodsList: function () {
+    // let idx = this.data.index;
+    // let storeId = this.data.storeList[idx].id;
+    let that = this
+    let param = {
+      // class_1: this.data.currentClass,
+      storeId: Number(this.data.index)+1,
+      type: 1
+    }
+    requestApi.request("App/Goods/goodsList", param, (result) => {
+      if (result.code == "A00006") {
+        for (let i = 0; i < result.data.length; i++) {
+           for(let j = 0; j<result.data[i].goods.length;j++){
+             result.data[i].goods[j].count = 0;
+           }
+        }
+        that.setData({
+          constants: result.data,
+          HZL_currentLeftSelect: result.data[0].class_id,
+        })
+        that.setData({
+          HZL_eachRightItemToTop: this.HZL_getEachRightItemToTop()
+        })
+      }
+    })
   },
   onShow: function () {
     let vm = this;
     vm.getUserLocation();
     vm.getStoreList();
-    // vm.getClassList();
-    vm.getGoodsList();
   },
   getStoreList: function () {
     let param = {
@@ -252,37 +188,6 @@ Page({
         let currentShop = this.data.storeList[idx];
         this.setData({
           currentShop: currentShop
-        })
-      }
-    })
-  },
-  getClassList: function () {
-    let param = {
-      type:1
-    }
-    requestApi.request("App/Goods/classList", param, (result) => {//signUp
-      if (result.code == "A00006") {
-        this.setData({
-          classList: result.data
-        })
-      }
-    })
-  },
-  getGoodsList: function () {
-    let idx = this.data.index;
-    let storeId = this.data.storeList[idx].id;
-    let param = {
-      class_1: this.data.currentClass,
-      storeId: storeId,
-      type:1
-    }
-    requestApi.request("App/Goods/goodsList", param, (result) => {
-      if (result.code == "A00006") {
-        for(let i =0;i<result.data.length;i++){
-            result.data[i].Count=0
-        }
-        this.setData({
-          goodsList: result.data
         })
       }
     })
@@ -378,10 +283,225 @@ Page({
       }
     });
   },
-  onHide: function () {
-    // 页面隐藏
+  //点击分类栏
+  HZL_categories: function (e) {
+    var that = this;
+    that.setData({
+      HZL_swiper_ID: e.currentTarget.dataset.index
+    })
   },
-  onUnload: function () {
-    // 页面关闭
-  }
+
+  // 获取每个右侧的 bar 到顶部的距离，用来做后面的计算。
+  HZL_getEachRightItemToTop: function () {
+    var obj = {};
+    var totop = 0;
+    // 右侧第一类肯定是到顶部的距离为 0
+    console.log(this.data.constants)
+    obj[this.data.constants[0].class_id] = totop
+    // 循环来计算每个子类到顶部的高度
+    for (let i = 1; i < (this.data.constants.length + 1); i++) {
+      totop += (RIGHT_BAR_HEIGHT + this.data.constants[i - 1].goods.length * RIGHT_ITEM_HEIGHT)
+      // 这个的目的是 例如有两类，最后需要 0-1 1-2 2-3 的数据，所以需要一个不存在的 'last' 项，此项即为第一类加上第二类的高度。
+      obj[this.data.constants[i] ? this.data.constants[i].class_id : 'last'] = totop
+    }
+    return obj
+  },
+  // 监听右侧的滚动事件与 HZL_eachRightItemToTop 的循环作对比 从而判断当前可视区域为第几类，从而渲染左侧的对应类。
+  right: function (e) {
+    for (let i = 0; i < this.data.constants.length; i++) {
+      let left = this.data.HZL_eachRightItemToTop[this.data.constants[i].class_id]
+      let right = this.data.HZL_eachRightItemToTop[this.data.constants[i + 1] ? this.data.constants[i + 1].class_id : 'last'];
+      if (e.detail.scrollTop < right && e.detail.scrollTop >= left) {
+        this.setData({
+          HZL_currentLeftSelect: this.data.constants[i].class_id,
+          HZL_leftToTop: LEFT_ITEM_HEIGHT * i
+        })
+      }
+    }
+  },
+  // 左侧类的点击事件，点击时，右侧会滚动到对应分类
+  left: function (e) {
+    console.log(e)
+    this.setData({
+      HZL_toView: e.target.id || e.target.dataset.id,
+      HZL_currentLeftSelect: e.target.id || e.target.dataset.id
+    })
+    console.log(this.data.HZL_toView)
+  },
+
+
+  //是否显示下面的购物车
+  HZL_isCat: function (e) {
+    var that = this;
+    if (that.data.HZL_isCat == 0 && that.data.HZL_num > 0) {
+      that.setData({
+        HZL_isCat: 1
+      })
+    } else if (that.data.HZL_isCat == 1 && that.data.HZL_num > 0) {
+      that.setData({
+        HZL_isCat: 0
+      })
+    }
+  },
+
+  //关闭
+  HZL_isCat_close: function (e) {
+    this.setData({
+      HZL_isCat: 0
+    })
+  },
+
+  //清空
+  HZL_zero: function (e) {
+    for (var i = 0; i < this.data.constants.length; i++) {
+      for (var j = 0; j < this.data.constants[i].goods.length; j++) {
+        this.data.constants[i].goods[j].count = 0
+      }
+    }
+    this.setData({
+      HZL_isCat: 0,
+      HZL_num: 0,
+      HZL_my_cat: [],
+      constants: this.data.constants,
+    })
+  },
+
+  // 增加
+  HZL_jia: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var parentIndex = e.currentTarget.dataset.parentindex;
+    var HZL_my_cat = this.HZL_my_jia(parentIndex, index)
+    this.setData({
+      HZL_num: this.data.HZL_num,
+      HZL_my_cat: HZL_my_cat,
+      constants: this.data.constants,
+    })
+  },
+
+  //减少
+  HZL_jian: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var parentIndex = e.currentTarget.dataset.parentindex;
+    var HZL_my_cat = this.HZL_my_jian(parentIndex, index)
+
+    if (this.data.HZL_num == 0) {
+      this.data.HZL_isCat = 0;
+    } else {
+      this.data.HZL_isCat = 1;
+    }
+
+    this.setData({
+      HZL_num: this.data.HZL_num,
+      HZL_my_cat: HZL_my_cat,
+      constants: this.data.constants,
+    })
+    
+  },
+
+  // 下面购物车增加
+  HZL_jia1: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var parentIndex = e.currentTarget.dataset.parentindex;
+    var HZL_my_cat = this.HZL_my_jia(parentIndex, index)
+    this.setData({
+      HZL_num: this.data.HZL_num,
+      HZL_my_cat: HZL_my_cat,
+      constants: this.data.constants,
+    })
+  },
+
+  //下面购物车减少
+  HZL_jian1: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var parentIndex = e.currentTarget.dataset.parentindex;
+    var HZL_my_cat = this.HZL_my_jian(parentIndex, index)
+
+    if (this.data.HZL_num == 0) {
+      this.data.HZL_isCat = 0;
+    } else {
+      this.data.HZL_isCat = 1;
+    }
+
+    this.setData({
+      HZL_num: this.data.HZL_num,
+      HZL_my_cat: HZL_my_cat,
+      constants: this.data.constants,
+      HZL_isCat: this.data.HZL_isCat
+    })
+  },
+
+  //封装加的方法
+  HZL_my_jia: function (parentIndex, index) {
+    this.data.HZL_num++;
+    var index = index;
+    var parentIndex = parentIndex;
+    var id = this.data.constants[parentIndex].goods[index].id;
+    var name = this.data.constants[parentIndex].goods[index].goods_name;
+    var num = ++this.data.constants[parentIndex].goods[index].count;
+    var goods_price = this.data.constants[parentIndex].goods[index].goods_price;
+    //弄一个元素判断会不会是重复的
+    var mark = 'a' + index + 'b' + parentIndex + 'c' + '0' + 'd' + '0'
+    var obj = { num: num, name: name, mark: mark, index: index, parentIndex: parentIndex, goods_price: goods_price, store_id: Number(this.data.index) + 1, goods_num: num, goods_name: name,id:id};
+    var HZL_my_cat = this.data.HZL_my_cat;
+    HZL_my_cat.push(obj)
+
+    var arr = [];
+    //去掉重复的
+    for (var i = 0; i < HZL_my_cat.length; i++) {
+      if (obj.mark == HZL_my_cat[i].mark) {
+        HZL_my_cat.splice(i, 1, obj)
+      }
+      if (arr.indexOf(HZL_my_cat[i]) == -1) {
+        arr.push(HZL_my_cat[i]);
+      }
+    }
+    this.setData({
+      carArray: arr
+    })
+    this.calTotalPrice();
+    return arr
+  },
+
+  //封装减的方法
+  HZL_my_jian: function (parentIndex, index) {
+    this.data.HZL_num--;
+    var index = index;
+    var parentIndex = parentIndex;
+    var id = this.data.constants[parentIndex].goods[index].id;
+    var name = this.data.constants[parentIndex].goods[index].goods_name;
+    var num = --this.data.constants[parentIndex].goods[index].count;
+    var goods_price = this.data.constants[parentIndex].goods[index].goods_price;
+    //弄一个元素判断会不会是重复的
+    var mark = 'a' + index + 'b' + parentIndex + 'c' + '0' + 'd' + '0'
+    var obj = { num: num, name: name, mark: mark, index: index, parentIndex: parentIndex, goods_price: goods_price, store_id: Number(this.data.index) + 1, goods_num: num, goods_name: name,id:id};
+    var HZL_my_cat = this.data.HZL_my_cat;
+    HZL_my_cat.push(obj)
+
+    var arr = [];
+    //去掉重复的
+    for (var i = 0; i < HZL_my_cat.length; i++) {
+      if (obj.mark == HZL_my_cat[i].mark) {
+        HZL_my_cat.splice(i, 1, obj)
+      }
+    }
+
+
+    var arr1 = [];
+    //当数量大于1的时候加
+    for (var i = 0; i < HZL_my_cat.length; i++) {
+      if (arr1.indexOf(HZL_my_cat[i]) == -1) {
+        arr1.push(HZL_my_cat[i]);
+        if (HZL_my_cat[i].num > 0) {
+          arr.push(arr1[i])
+        }
+      }
+    }
+
+    this.setData({
+      carArray:arr
+    })
+    this.calTotalPrice();
+    return arr
+  },
+
 })
