@@ -10,7 +10,8 @@ Page({
     index: 0,
     hasAddress: false,
     orderList:[],
-    total_price:''
+    total_price:'',
+    order_num:""
   },
   select: function (e) {
     this.setData({
@@ -37,43 +38,34 @@ Page({
   },
 
   pay: function (e) {
-    // wx.showModal({
-    //   title: '支付提示',
-    //   content: '本程序仅用于演示，支付接口API已屏蔽！',
-    //   showCancel: false,
-    //   success: function (res) {
-    //     if (res.confirm) {
-    //       console.log('用户点击确定')
-    //     }
-    //   }
-    // })
-    // Cash.request(Cash.api.CASH_CMS_WXPAY_WX_PAY, { "uOpenid": getApp().globalData.openId, "amount": I.data.num }, function (result) {
-    //   if (true == result.success) {
-    //     wx.requestPayment(
-    //       {
-    //         'timeStamp': result.data.timeStamp,
-    //         'nonceStr': result.data.nonceStr,
-    //         'package': result.data.package,
-    //         'signType': 'MD5',
-    //         'paySign': result.data.sign,
-    //         'success': function (res) {
-    //           wx.showToast({
-    //             title: '支付成功',
-    //             icon: 'success',
-    //             duration: 2000
-    //           })
-    //         },
-    //         'fail': function (res) { },
-    //         'complete': function (res) { }
-    //       })
-    //   } else {
-    //     wx.showModal({
-    //       title: '提示',
-    //       content: result.message,
-    //       showCancel: false
-    //     });
-    //   }
-    // });
+    let params = { "uOpenid":  wx.getStorageSync("userId") || '', "amount": this.data.total_price, "order_id": this.data.order_num }
+    requestApi.request('App/Order/wxPay', params , function (result) {
+      if ('A00006' == result.code) {
+        wx.requestPayment(
+          {
+            'timeStamp': result.data.timeStamp,
+            'nonceStr': result.data.nonceStr,
+            'package': result.data.package,
+            'signType': 'MD5',
+            'paySign': result.data.sign,
+            'success': function (res) {
+              wx.showModal({
+                title: '支付成功',
+                content: '此订单已支付完成',
+                showCancel: false,
+                confirmText: "返回首页",
+                success(res) {
+                  wx.switchTab({
+                    url: '../../pages/shop/shop',
+                  })
+                }
+              })
+            },
+            'fail': function (res) { },
+            'complete': function (res) { }
+          })
+      }
+    });
   },
 
   /**
@@ -82,7 +74,10 @@ Page({
   onLoad: function (options) {
     var orderCode = options.orderCode
     console.log(orderCode)
-    let order_num = orderCode
+    let order_num = orderCode;
+    this.setData({
+      order_num: order_num
+    })
     let param = {
       order_num: order_num
     }

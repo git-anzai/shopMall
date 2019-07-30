@@ -17,7 +17,7 @@
     <view class='img-span'>
       <view style='font-size:24rpx;color:#909399'>添加内容图片</view>
       <image src='../../images/add_image.png' bindtap='updataimg' class='img'></image>
-      <image wx:for="{{descImg}}" wx:key="index" src='{{item}}' bindtap='updateimg' class='img'></image>
+      <image wx:for="{{descImg}}" wx:key="index" src='{{item}}'  class='img'></image>
     </view>
   </view>
 

@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -14,7 +14,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",
-	"appid": "wx35053cf5c1cec792",
+	"appid": "wxbbff2871aac5d72f",
 	"projectname": "shoppingMall",
 	"debugOptions": {
 		"hidedInDevtools": []

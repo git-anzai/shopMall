@@ -56,7 +56,7 @@
             <view class="HZL_son">
               <!-- {{item.category_name}} -->
                <view class='icon'>
-                <image src='../../images/none.jpg' style='width:58px;height:58px;margin-right:20rpx;'></image>
+                <image  src='{{item.goods_cover}}' style='width:58px;height:58px;margin-right:20rpx;'></image>
               </view>
               <view class='content'>
                 <view class="name">{{item.goods_name}}</view>
