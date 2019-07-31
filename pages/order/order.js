@@ -1,24 +1,27 @@
 // pages/order/order.js
+import requestApi from '../../common/request.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    currentTabsIndex: 0
-  },
-  onTabsItemTap(event) {
-    var index = event.currentTarget.dataset.index;
-    var that = this;
-    that.setData({
-      currentTabsIndex: index,
-    })
+    list:[]
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let param = {}
+    requestApi.request("App/Order/ownerOrders", param, (result) => {
+      console.log(result);
+      if ("A00006" == result.code) {
+       this.setData({
+         list:result.data
+       })
+       console.log(this.data.list)
+      }
+    })
   },
 
   /**

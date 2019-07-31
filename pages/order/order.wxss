@@ -34,6 +34,12 @@ view{
   padding:24rpx 20rpx;
   font-size: 28rpx;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+}
+.orderTotalFee,.orderNum{
+ flex:1
+}
+.orderTotalFee{
+  text-align: right
 }

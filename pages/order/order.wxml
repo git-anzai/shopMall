@@ -1,16 +1,16 @@
 <!--pages/order/order.wxml-->
-<view class='tabs-box'>
+<!-- <view class='tabs-box'>
   <block wx:for="{{['全部','已领取','已取消']}}" wx:key="id">
     <view class="tabs-item {{currentTabsIndex==index?'selected':''}}" bindtap='onTabsItemTap' data-index='{{index}}'>
       {{item}}
     </view>
   </block>
-</view>
+</view> -->
 <view>
   <view wx:for="{{list}}" wx:key="index" class='items'>
-    <text>签到时间：{{item.created_at}}</text>
-    <view>领取积分：
-      <text style='color:#ffcc51'>+{{item.integral}}</text>
+    <view class='orderNum'>订单号：{{item.order_num}}</view>
+    <view class='orderTotalFee'>订单总金额：
+      <text style='color:#F56C6C'>¥{{item.order_total_fee}}</text>
     </view>
   </view>
 </view>

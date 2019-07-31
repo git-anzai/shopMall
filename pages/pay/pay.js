@@ -1,4 +1,5 @@
 import requestApi from '../../common/request.js'
+var app = getApp();
 Page({
 
   /**
@@ -11,7 +12,8 @@ Page({
     hasAddress: false,
     orderList:[],
     total_price:'',
-    order_num:""
+    order_num:"",
+    isPay:false
   },
   select: function (e) {
     this.setData({
@@ -38,6 +40,8 @@ Page({
   },
 
   pay: function (e) {
+    let _this = this;
+  
     let params = { "uOpenid":  wx.getStorageSync("userId") || '', "amount": this.data.total_price, "order_id": this.data.order_num }
     requestApi.request('App/Order/wxPay', params , function (result) {
       if ('A00006' == result.code) {
@@ -52,9 +56,12 @@ Page({
               wx.showModal({
                 title: '支付成功',
                 content: '此订单已支付完成',
-                showCancel: false,
                 confirmText: "返回首页",
+                showCancel: false,
                 success(res) {
+                  _this.setData({
+                    isPay: true
+                  })
                   wx.switchTab({
                     url: '../../pages/shop/shop',
                   })
@@ -89,5 +96,13 @@ Page({
         })
       }
     })
+  },
+
+  onUnload:function() {
+    if(this.data.isPay){
+      var pages = getCurrentPages(); // 当前页面  
+      var beforePage = pages[pages.length - 2]; // 前一个页面  
+      beforePage.onLoad(); // 执行前一个页面的onLoad方法  
+    }
   }
 })

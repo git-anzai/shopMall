@@ -7,8 +7,8 @@ page{
   height: 105rpx;
   line-height: 105rpx;
   background: #1AAD19;
-  /* position: fixed; */
-  /* bottom: 0; */
+  position: fixed;
+ bottom: 0;
   color: white;
   font-size: 32rpx;
   text-align: center

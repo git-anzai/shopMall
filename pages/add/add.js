@@ -165,11 +165,14 @@ Page({
         console.log("djshjdkjdsik", result)
         if (result.code == "A00006") {
             wx.hideLoading();
-          wx.showToast({
-            title: result.message,
-            icon: "none",
-            duration: 2000
-          })
+            wx.showToast({
+              title: result.message,
+              icon: "none",
+              duration: 2000
+            })
+            wx.switchTab({
+              url: '../../pages/market/market',
+            })
         }
       })
     }

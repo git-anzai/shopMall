@@ -9,6 +9,7 @@ const RIGHT_ITEM_HEIGHT = 100;
 const LEFT_ITEM_HEIGHT = 50
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk;
+var app = getApp();
 Page({
   data: {
     //是否显示下面的购物车
@@ -31,25 +32,7 @@ Page({
     HZL_leftToTop: 0,
     carArray:[],
     totalPrice:0,
-    storeList: [{
-      "id": "1",
-      "store_name": "\u6bcd\u5a74\u4e00\u53f7\u5e97",
-      "store_owner": "\u6653\u767d",
-      "store_create": "2019-05-22 14:04:02",
-      "store_phone": "13112322345",
-      "store_location": null,
-      "store_update": "2019-05-22 14:07:03",
-      "stroe_address": "\u5c71\u4e1c\u7701\uff0c\u70df\u53f0\u5e02\uff0c\u88d5\u534e\u533a\uff0c\u548c\u5e73\u8def234\u53f7"
-    }, {
-      "id": "2",
-      "store_name": "222",
-      "store_owner": "\u6653\u767d",
-      "store_create": "2019-05-22 14:04:02",
-      "store_phone": "222",
-      "store_location": null,
-      "store_update": "2019-05-22 14:07:03",
-      "stroe_address": "222"
-    }],
+    storeList: [],
     currentClass: 1,
     index: 0,
     address: "",
@@ -121,13 +104,19 @@ Page({
     qqmapsdk = new QQMapWX({
       key: 'ZFZBZ-ZN5KP-QE4DV-VSBLO-TT2H6-7ZFWJ'
     });
-    this.getGoodsList();
     // that.setData({
     //   // constants: this.data.constants,
     //   // HZL_currentLeftSelect: this.data.constants[0].class_id,
     //   // HZL_eachRightItemToTop: this.HZL_getEachRightItemToTop()
     // })
 
+    this.getGoodsList();
+    this.setData({
+      HZL_my_cat:[],
+      totalPrice:0,
+      HZL_num: 0,
+      carArray:[]
+    })
 
   },
   calTotalPrice: function () {
@@ -175,6 +164,7 @@ Page({
     let vm = this;
     vm.getUserLocation();
     vm.getStoreList();
+
   },
   getStoreList: function () {
     let param = {

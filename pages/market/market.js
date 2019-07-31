@@ -8,8 +8,9 @@ Page({
   data: {
     imgWidth: 0, imgHeight: 0,
     showtab: 0,  //顶部选项卡索引
-      tabitem: [],
-    note: []
+    tabitem: [],
+    note: [],
+    class_type:''
   },
   goAdd:function() {
     wx.navigateTo({
@@ -26,7 +27,9 @@ Page({
     const edata = e.currentTarget.dataset;
     this.setData({
       showtab: edata.tabindex,
+      class_type: edata.id
     })
+    this.getGoodsList();
   },
   /**
    * 生命周期函数--监听页面加载
@@ -45,7 +48,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getGoodsList();
     this.getClassList();
   },
 
@@ -62,15 +64,17 @@ Page({
     requestApi.request("App/Goods/classList", param, (result) => {//signUp
       if (result.code == "A00006") {
         this.setData({
-          tabitem: result.data
+          tabitem: result.data,
+          class_type:result.data[0].id
         })
+        this.getGoodsList();
       }
     })
   },
   getGoodsList: function () {
     let param = {
       type: 2,
-      class_1:1,
+      class_1: this.data.class_type,
       storeId:0
     }
     requestApi.request("App/Goods/goodsList", param, (result) => {

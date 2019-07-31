@@ -56,6 +56,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    openID:null
+    openID:null,
+    goodsList:[]
   }
 })
