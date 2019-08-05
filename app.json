@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [    
     "pages/index/index",
     "pages/authorize/authorize",
     "pages/shop/shop",
@@ -11,9 +11,10 @@
     "pages/integralDetails/integralDetails",
     "pages/order/order",
     "pages/payment/payment",
-    "pages/bargain/bargain",
     "pages/goodsDetail/goodsDetail",
-    "pages/share/share"
+    "pages/share/share",
+    "pages/bargain/bargain",
+    "pages/orderDetail/orderDetail"
   ],
   "tabBar": {
     "color": "#858585",

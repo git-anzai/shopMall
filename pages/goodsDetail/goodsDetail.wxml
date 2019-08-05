@@ -15,7 +15,7 @@
   <swiper indicator-dots="{{indicatorDots}}" duration="{{duration}}" circular="true">
     <block wx:for="{{imgUrls}}" wx:key="index">
       <swiper-item>
-        <image src="../../images/none.jpg" class="slide-image" style='width:100%;height:200px' />
+        <image src="{{item}}" class="slide-image" style='width:100%;height:200px' />
       </swiper-item>
     </block>
   </swiper>

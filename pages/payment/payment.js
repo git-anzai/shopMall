@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    detail :{},
+    detail :[],
     sellOpenid: '',
     orderId: '',
     total_price:''
@@ -19,7 +19,7 @@ Page({
       if (result.code == "A00006") {
         console.log(result)
         this.setData({
-            detail:result.data.list[0],
+            detail:result.data.list,
             total_price: result.data.total_price
          })
          console.log(this.data.detail)
@@ -35,9 +35,17 @@ Page({
     }
     requestApi.request("App/order/integralPay", param, (result) => {
       if (result.code == "A00006") {
-          this.setData({
-            detail:result[0]
-          })
+        wx.showModal({
+          title: '支付成功',
+          content: '此订单已支付完成',
+          confirmText: "返回跳蚤市场",
+          showCancel: false,
+          success(res) {
+            wx.switchTab({
+              url: '../../pages/market/market',
+            })
+          }
+        })
       }
     })
   },

@@ -1,4 +1,5 @@
 // pages/share/share.js
+import requestApi from '../../common/request.js'
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
   data: {
     orderId:"",
     key:"",
-    avatarUrl:""
+    avatarUrl:"",
+    openId:''
   },
   rules: function () {
     wx.showModal({
@@ -21,8 +23,10 @@ Page({
   bargain: function () {
     let param = {
       orderId:this.data.orderId,
-      key:this.data.key
+      key:this.data.key,
+      openIds: this.data.openId
     }
+    console.log(param)
     requestApi.request("App/Order/bargainShare", param, (result) => {
 
     })
@@ -31,10 +35,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       key: options.key,
       orderId: options.orderId,
-      avatarUrl: options.avatarUrl
+      avatarUrl: options.avatarUrl,
+      openId:options.openId
     })
   },
 

@@ -1,7 +1,7 @@
 <view class="modal-mask" ></view>
 <view >
   <view class="modal-content">
-     <view style='margin:40rpx 30rpx 60rpx 30rpx;'>恭喜为自己砍掉了50积分</view>
+     <view style='margin:40rpx 30rpx 60rpx 30rpx;'>恭喜为自己砍掉了{{sprice}}积分</view>
    <button open-type="share" size="mini" type='primary'>邀请好友助力</button>
   </view>
 </view>

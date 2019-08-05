@@ -8,7 +8,7 @@
         </view>
         <view wx:for="{{orderList}}"  wx:for-item="item"  wx:key="index" wx:for-index="index">
            <view style='width:100%;overflow:hidden'>
-            <image src='{{item.goods_cover}}' class='main-image'></image>
+            <image src='{{item.goods_image}}' class='main-image'></image>
             <view class='main_left'>
                 <text class='main-title'>{{item.goods_name}}</text>
                 <text class='main-price'>￥{{item.goods_price}}</text>

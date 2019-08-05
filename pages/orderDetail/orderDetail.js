@@ -1,4 +1,4 @@
-// pages/order/order.js
+// pages/orderDetail/oderDetail.js
 import requestApi from '../../common/request.js'
 Page({
 
@@ -6,29 +6,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list:[]
+    total_price:0,
+    orderList:[]
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let param = {}
-    requestApi.request("App/Order/ownerOrders", param, (result) => {
-      console.log(result);
-      if ("A00006" == result.code) {
-       this.setData({
-         list:result.data
-       })
-       console.log(this.data.list)
+    let param = {
+      order_num: options.orderNum
+    }
+    requestApi.request("App/order/orderDetail", param, (result) => {//signUp
+      if (result.code == "A00006") {
+        this.setData({
+          total_price: result.data.total_price,
+          orderList: result.data.list
+        })
       }
     })
   },
-  goOrderDetail(e) {
-    let orderNum = e.currentTarget.dataset.ordernum;
-    wx.navigateTo({
-      url: '../orderDetail/orderDetail?orderNum=' + orderNum 
-    })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

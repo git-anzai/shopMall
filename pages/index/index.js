@@ -10,11 +10,11 @@ Page({
     userInfo: {},
     hasUserInfo: false,
   },
-  userLogin: function (loginRes, res, orderId, key, avatarUrl) {
+  userLogin: function (loginRes, res, orderId, key, avatarUrl, openId) {
     var param = {
       code: loginRes.code
     };
-    requestApi.request("App/User/userLogin", param, function(result) {
+    requestApi.request("App/User/userLogin", param, function (result) {
       if (result.code = "A00006") {
         getApp().globalData.openId = result.data;
         wx.setStorageSync('openId', getApp().globalData.openId)
@@ -30,12 +30,12 @@ Page({
               if (orderId && key) {
                 setTimeout(() => {
                   wx.navigateTo({
-                    url: '../share/share?orderId= ' + orderId + "&key=" + key,
+                    url: '../share/share?orderId= ' + orderId + "&key=" + key + "&openId=" + openId,
                   })
                 }, 1000)
               } else {
-                requestApi.request("App/User/userUpdate", param, function(result) {
-                  setTimeout(function() {
+                requestApi.request("App/User/userUpdate", param, function (result) {
+                  setTimeout(function () {
                     wx.reLaunch({
                       url: '../shop/shop'
                     })
@@ -47,22 +47,23 @@ Page({
         } else { //未授权，跳到授权页面
           setTimeout(() => {
             wx.redirectTo({
-              url: '../authorize/authorize?orderId=' + orderId + "&key=" + key + "&avatarUrl=" + avatarUrl, //授权页面
+              url: '../authorize/authorize?orderId=' + orderId + "&key=" + key + "&avatarUrl=" + avatarUrl + "&openId=" + openId, //授权页面
             })
           }, 1000)
         }
       }
     });
   },
-  onLoad: function(option) {
+  onLoad: function (option) {
     let orderId = option.orderId;
     let key = option.key;
     let avatarUrl = option.avatarUrl;
+    let openId = option.openId;
     wx.getSetting({
       success: (res) => {
         wx.login({
           success: loginRes => {
-            this.userLogin(loginRes, res, orderId, key, avatarUrl)
+            this.userLogin(loginRes, res, orderId, key, avatarUrl, openId)
           }
         })
       }

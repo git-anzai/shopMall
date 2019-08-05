@@ -1,9 +1,11 @@
 <!--pages/payment/payment.wxml-->
 <view>
   <view class='msg'>完成付款后获取对方联系方式</view>
-  <view class='main'>
-    <image src='../../images/none.jpg' class='main-img'></image>
-    <text class='title'>{{detail.goods_name}}</text>
+  <view  wx:for="{{detail}}" wx:key="index">
+    <view class='main'>
+    <image src='{item.goods_image}' class='main-img'></image>
+    <text class='title'>{{item.good_name}}</text>
+  </view>
   </view>
   <view class='txt'>
     <text>积分支出</text>

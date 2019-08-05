@@ -10,24 +10,25 @@ Page({
   data: {
     // 判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'), //获取用户信息是否在当前版本可用
-    orderId:"",
-    key:"",
-    avatarUrl:""
+    orderId: "",
+    key: "",
+    avatarUrl: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    if(options.orderId&&options.key&&options.avatarUrl){
+  onLoad: function (options) {
+    if (options.orderId && options.key && options.avatarUrl && options.openId) {
       this.setData({
         orderId: options.orderId,
         key: options.key,
-        avatarUrl: options.avatarUrl
+        avatarUrl: options.avatarUrl,
+        openId: options.openId
       })
     }
   },
-  bindGetUserInfo: function(e) { //点击的“拒绝”或者“允许
+  bindGetUserInfo: function (e) { //点击的“拒绝”或者“允许
     if (e.detail.userInfo) { //点击了“允许”按钮，
       //调用应用实例的方法获取全局数据
       //更新数据
@@ -35,15 +36,15 @@ Page({
       var param = {
         userInfo: app.globalData.userInfo,
       };
-      requestApi.request("App/User/userUpdate", param, (result)=> {
+      requestApi.request("App/User/userUpdate", param, (result) => {
         if ("A00006" == result.code) {
           console.log(this)
-          if (this.data.orderId != "undefined" && this.data.key != "undefined" && this.data.avatarUrl != "undefined" ){
-            setTimeout( ()=> {
+          if (this.data.orderId != "undefined" && this.data.key != "undefined" && this.data.avatarUrl != "undefined" && this.data.openId != "undefined") {
+            setTimeout(() => {
               wx.navigateTo({
-                url: '../share/share?orderId= ' + this.data.orderId + "&key=" + this.data.key + "&avatarUrl=" + this.data.avatarUrl,
+                url: '../share/share?orderId= ' + this.data.orderId + "&key=" + this.data.key + "&avatarUrl=" + this.data.avatarUrl + "&openId=" + this.data.openId,
               })
-            }, 1000)  
+            }, 1000)
           } else {
             let param = {};
             requestApi.request("App/User/userInfo", param, function (result) {
@@ -59,7 +60,7 @@ Page({
           // $Message({ content: result.message, type: 'error' });
         }
       });
-    }else {
+    } else {
       wx.navigateBack({
         delta: -2
       })

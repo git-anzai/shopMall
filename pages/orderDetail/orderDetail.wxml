@@ -1,0 +1,29 @@
+<!--pages/home/home-details/pay.wxml-->
+<view>
+    <view class='pay-header'>
+    </view>
+    <view class='pay-main'>
+        <view class='main-one'>
+            <text>订单详情</text>
+        </view>
+        <view wx:for="{{orderList}}"  wx:for-item="item"  wx:key="index" wx:for-index="index">
+           <view style='width:100%;overflow:hidden'>
+            <image src='{{item.goods_image}}' class='main-image'></image>
+            <view class='main_left'>
+                <text class='main-title'>{{item.goods_name}}</text>
+                <text class='main-price'>￥{{item.goods_price}}</text>
+            </view>
+            <view class='main_right'>
+                <text>x{{item.goods_num}}</text>
+            </view>
+        </view>
+        </view>
+    </view>
+    <view class='pay-mainFive'>
+        <view class='mainFive-one'>
+            <text class='left'>订单总金额</text>
+            <text class='right'>￥{{total_price}}</text>
+        </view>
+    </view>
+</view>   
+

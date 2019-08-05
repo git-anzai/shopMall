@@ -6,11 +6,7 @@ var app = getApp()
 Page({
   data: {
     userInfo: {},
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
+    imgUrls: [],
     duration: 1000,
     orderId:'',
     goods:{}
@@ -54,9 +50,11 @@ Page({
           duration: 2000
         })
         let param = JSON.stringify(params)
-        wx.navigateTo({
-          url: '../bargain/bargain?param=' + param
-        })
+        if(this.data.orderId) {
+          wx.navigateTo({
+            url: '../bargain/bargain?param=' + param
+          })
+        }
       } else {
         this.markOrder();
       }
@@ -101,7 +99,8 @@ Page({
     requestApi.request("App/Goods/goodsDetail", param, (result) => {
       if (result.code == "A00006") {
         this.setData({
-          goods: result.data
+          goods: result.data,
+          imgUrls: result.data.goods_image
         })
         console.log(result)
       }

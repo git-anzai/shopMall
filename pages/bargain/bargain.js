@@ -7,15 +7,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderId:"",
+    orderId: "",
     key: "",
-    avatarUrl:""
+    avatarUrl: "",
+    sprice: 0,
+    openId:""
   },
 
-  bargainShare:function(param) {
+  bargainShare: function (param) {
     requestApi.request("App/Order/bargainShare", param, (result) => {
-     
-    })  
+      if (result.code == "A00006") {
+        this.setData({
+          sprice: result.data
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -26,8 +32,9 @@ Page({
     })
     let params = JSON.parse(options.param)
     this.setData({
-      orderId:params.orderId,
-      key:params.key
+      orderId: params.orderId,
+      key: params.key,
+      openId: wx.getStorageSync("openId") || ""
     })
     this.bargainShare(params)
   },
@@ -82,11 +89,11 @@ Page({
       let _this = this;
       return {
         title: "请为我助力",
-        path: 'pages/index/index?orderId=' + _this.data.orderId+"&key="+_this.data.key+"&avatarUrl="+_this.data.avatarUrl, 
-        success:function(res) {
+        path: 'pages/index/index?orderId=' + _this.data.orderId + "&key=" + _this.data.key + "&avatarUrl=" + _this.data.avatarUrl + "&openId=" + _this.data.openId,
+        success: function (res) {
           // console.log("转发成功:" + JSON.stringify(res));
         },
-        fail:function(res) {
+        fail: function (res) {
           // console.log("转发成功:" + JSON.stringify(res));
         }
       }
